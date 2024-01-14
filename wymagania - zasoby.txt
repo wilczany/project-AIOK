@@ -15,16 +15,13 @@ niezwiazane z konkretnymi zasobami
 
 6. modyfikacja danych odbywa się tylko w jednym komponencie - 1pkt
 
-
 7. operacje modyfikacji danych za pomocą 4 rodzajów żądań http - 2pkt
 
 8. żądania do serwera są zapisane w jednym oddzielnym pliku (serwis) - 1pkt
 
 9. routing (ścieżki 'routes', w tym jedna z parametrem) - 1pkt
 
-
 10. wykorzystanie dwóch zmiennych właściwości routingu (np. navigate, params) - 1pkt
-
 
 11. brak błędów/ostrzeżeń w konsoli przegladarki - 1pkt
 niezwiazane z konkretnymi zasobami

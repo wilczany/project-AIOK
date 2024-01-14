@@ -1,7 +1,6 @@
 1. własna walidacja danych wprowadzanych przez użytkownika ( w każdym przypadku wprowadzania danych, co najmniej 5 różnych przypadków danych) - 2pkt,
 
 2. użycie TypeScript, ew. obowiązkowa weryfikacja typu danych (PropTypes) przekazywanych do wszystkich komponentów (nie stosujemy typu 'any') - 2pkt
-po prostu typescript
 używamy typescript ✔
 
 3. wykorzystanie komponentów prezentacyjnych (co najmniej 2 przypadki) - 1pkt,
@@ -10,7 +9,6 @@ LessonCell,  | 1/2
 4. dwukierunkowa komunikacja pomiędzy komponentami  - 1pkt,
 
 5. co najmniej 4 komponenty reużywalne (komponenty, które mogą być użyte bez zmian w kodzie komponentu w innym miejscu projektu) - 2pkt
-niezwiazane z konkretnymi zasobami
 LessonCell,  | 1/4
 
 6. modyfikacja danych odbywa się tylko w jednym komponencie - 1pkt

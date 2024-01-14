@@ -1,0 +1,66 @@
+Wymagania: 
+1. własna walidacja danych wprowadzanych przez użytkownika (w każdym przypadku wprowadzania danych, co najmniej 5 różnych przypadków danych) - 2pkt, 
+formularze, si? 
+
+2. użycie TypeScript, ew. obowiązkowa weryfikacja typu danych (PropTypes) przekazywanych do wszystkich komponentów (nie stosujemy typu 'any') - 2pkt 
+używamy typescript ✔   
+
+3. wykorzystanie komponentów prezentacyjnych (co najmniej 2 przypadki) - 1pkt, 
+koniec końców zobaczymy ile będzie komponentów bez wykorzystania stanu, nie powinno być problemu z osiągnięciem liczby 2 xdd 
+KomorkaZajec, PokazZajecia | 2/2 
+
+4. dwukierunkowa komunikacja pomiędzy komponentami - 1pkt, 
+“@input” 
+DodajZajecia wybór z list sal/nauczycieli/klas -> zmiana w wyświetlanych rozkładach 
+“@output”  
+? 
+
+5. co najmniej 4 komponenty reużywalne (komponenty, które mogą być użyte bez zmian w kodzie komponentu w innym miejscu projektu) - 2pkt 
+TablaZajec, KrotkaZajec, PustaKrotkaZajec, RozkladNauczyciela, RozkladSali, RozkladKlasy | 6/4 
+
+6. modyfikacja danych odbywa się tylko w jednym komponencie - 1pkt 
+pewnie nie złapiemy, chuj wie co to znaczy  
+
+7. operacje modyfikacji danych za pomocą 4 rodzajów żądań http - 2pkt  
+
+8. żądania do serwera są zapisane w jednym oddzielnym pliku (serwis) - 1pkt 
+
+9. routing (ścieżki 'routes', w tym jedna z parametrem) - 1pkt 
+PokazZajecia - komponent z parametrem id konkretnych zajęć
+
+10. wykorzystanie dwóch zmiennych właściwości routingu (np. navigate, params) - 1pkt 
+
+11. brak błędów/ostrzeżeń w konsoli przegladarki - 1pkt  
+
+Komponenty: 
+
+TabelaZajec - tabela planu zajęć używana w komponentach rozkładów, uzupełniana krotkami 
+
+KomorkaZajec - komorka w tabeli planu zajęć, przyjmuje obiekt Zajęć, wypisuje {Nazwa Sala.Id Nauczyciel.ShortName} 
+
+PokazZajecia - dokladny opis zajęć, routing z parametrem, przykładowo wyświetlany po naciśnięciu na krotkę którychś zajęć  
+
+RozkladNauczyciela - komponent przekazujący odpowiednio przefiltrowane i zmapowane zajęcia wybranego nauczyciela do komponentu TabelaZajec 
+
+RozkladSali - komponent przekazujący odpowiednio przefiltrowane i zmapowane zajęcia wybranej sali do komponentu TabelaZajec 
+
+RozkladKlasy - komponent przekazujący odpowiednio przefiltrowane i zmapowane zajęcia wybranej klasy do komponentu TabelaZajec 
+
+DodajNauczyciela - komponent formularz nowego nauczyciela 
+
+DodajSale - komponent formularz nowej sali 
+
+DodajKlase - komponent formularz nowej klasy 
+
+DodajZajecia - komponent formularz nowych zajęć - reaktywne rozkłady zajęć przy wyborze w formularzu klasy, sali czy nauczyciela (patrz projekt angular) 
+
+DodajZajecia2(roboczo) - komponent formularz nowych zajęć - włączany z kliknięcia w pustą krotkę tabeli któregokolwiek rozkładu, automatycznie wypełnia część formularza na podstawie naciśniętej krotki (godzina zajęć, wybrana sala/nauczyciel/klasa zależnie od klikniętego rozkładu, możliwe sale/nauczyciele/klasy byłyby filtrowane jedynie po wolnych osobach) 
+
+ 
+
+KomorkaZajec - komórka w tabeli planu zajęć, przyjmuje obiekt Zajęć lub nic, w przypadku obiektu zajęć wypisuje {zaj.Nazwa zaj.Sala.Id zaj.Nauczyciel.ShortName} wypełniając krotkę, w przeciwnym wypadku nie wypisuje nic, ale kliknięcie wywołuje DodajZajecia z wypełnionymi danymi pod daną krotkę 
+Wady: przestaje być prezentacyjny? 
+Rozwiązanie: oddzielny komponent na pustą krotkę, +1 do reużywalnych 
+PustaKomorkaZajec - komórka w tabeli planu zajęć, nie przyjmuje obiektu Zajęć, nic nie wypisuje, lecz kliknięcie wywołuje DodajZajecia2 z wypełnionymi danymi pod daną krotkę  
+
+Komorki mogłyby przyjmować w parametrach przynajmniej współrzędne(kolumna, wiersz) dla organizacji. Współrzędne mogłyby wtedy też trafiać do id etykiet (<span> lub całe <td>) 
