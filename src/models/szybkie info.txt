@@ -1,0 +1,2 @@
+planowałem modele napisać od 0 po angielsku, przypał z tym trochę(spróbuj przetłumaczyć 1:1 kontekst np. klasa na angielski w naszym rozumieniu)
+modele przekopiowane z angulara i minimalnie przerobione pod standard reacta
