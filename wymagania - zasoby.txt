@@ -1,0 +1,31 @@
+1. własna walidacja danych wprowadzanych przez użytkownika ( w każdym przypadku wprowadzania danych, co najmniej 5 różnych przypadków danych) - 2pkt,
+
+https://navoica.pl/courses/course-v1:Politechnika_Bialostocka+AIOK+2022_S3/courseware/c3574ba934034bf496039de3e8985b8b/d46e7058e4084e56ba5e9cde88d0f4a1/6?activate_block_id=block-v1%3APolitechnika_Bialostocka%2BAIOK%2B2022_S3%2Btype%40vertical%2Bblock%404354d5062868488393fa38484b654beb
+
+2. użycie TypeScript, ew. obowiązkowa weryfikacja typu danych (PropTypes) przekazywanych do wszystkich komponentów (nie stosujemy typu 'any') - 2pkt
+po prostu typescript
+
+3. wykorzystanie komponentów prezentacyjnych (co najmniej 2 przypadki) - 1pkt,
+https://navoica.pl/courses/course-v1:Politechnika_Bialostocka+AIOK+2022_S3/courseware/c3574ba934034bf496039de3e8985b8b/66a6141e695c4df9b180e1f199d5e2e9/?child=first
+
+4. dwukierunkowa komunikacja pomiędzy komponentami  - 1pkt,
+
+5. co najmniej 4 komponenty reużywalne (komponenty, które mogą być użyte bez zmian w kodzie komponentu w innym miejscu projektu) - 2pkt
+niezwiazane z konkretnymi zasobami
+
+6. modyfikacja danych odbywa się tylko w jednym komponencie - 1pkt
+
+
+7. operacje modyfikacji danych za pomocą 4 rodzajów żądań http - 2pkt
+
+8. żądania do serwera są zapisane w jednym oddzielnym pliku (serwis) - 1pkt
+
+9. routing (ścieżki 'routes', w tym jedna z parametrem) - 1pkt
+
+
+10. wykorzystanie dwóch zmiennych właściwości routingu (np. navigate, params) - 1pkt
+
+
+11. brak błędów/ostrzeżeń w konsoli przegladarki - 1pkt
+niezwiazane z konkretnymi zasobami
+key do mapowanych komponentow
