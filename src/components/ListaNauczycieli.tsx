@@ -20,7 +20,7 @@ function ListaNauczycieli(): React.ReactNode {
 
 	return (
 		<div style={{ backgroundColor: "magenta" }}>
-			<p>Komponent lista klas</p>
+			<p>Komponent lista nauczycieli</p>
 			{nauczycieleList.map((nauczyciel) => {
 				return (
 					<p>
