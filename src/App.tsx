@@ -12,6 +12,7 @@ import TypyZajec from "./models/typyZajec";
 import Zajecia from "./models/zajecia";
 import KomorkaZajec from "./components/KomorkaZajec";
 import { getFetchSala } from "./services/DatabaseService";
+import ListaKlas from "./components/ListaKlas";
 //kuniec debugowych
 
 function App() {
@@ -22,10 +23,11 @@ function App() {
 				<p>
 					GitHub Codespaces(niefajne, musiałem naprawiać dla windowsa) <span className="heart">♥️</span> React
 				</p>
-				<Piaskownica></Piaskownica>
+				{/* <Piaskownica></Piaskownica> */}
 				<p className="small">
 					Edit <code>src/App.tsx</code> and save to reload.
 				</p>
+				<ListaKlas></ListaKlas>
 			</header>
 		</div>
 	);

@@ -17,49 +17,51 @@ function Piaskownica(): React.ReactNode {
 		sala1Promise.then((param) => setSala(param));
 
 		let zajeciaPromise = getFetchZajecia();
-		zajeciaPromise.then((zajList) =>
-			zajList.forEach((zaj) => {
-				var zajObject = new Zajecia(
-					zaj.id,
-					zaj.nazwa_przedmiotu,
-					zaj.nr_lekcji,
-					zaj.dzien,
-					new Klasa(
-						parseInt(zaj.grade.id),
-						parseInt(zaj.grade.rok),
-						zaj.grade.grupa,
-						parseInt(zaj.grade.liczba_uczniow),
-						zaj.grade.teacherId,
-						zaj.grade.profil
-					),
-					new Nauczyciel(
-						parseInt(zaj.teacher.id),
-						zaj.teacher.imie,
-						zaj.teacher.nazwisko,
-						zaj.teacher.wyksztalcenie,
-						zaj.teacher.email
-					),
-					new Sala(
-						parseInt(zaj.classroom.id),
-						parseInt(zaj.classroom.pietro),
-						parseInt(zaj.classroom.numer),
-						parseInt(zaj.classroom.pojemnosc)
-					),
-					zaj.typZajec
-				);
-				console.log(zajeciaList);
-				setZajeciaList((zajeciaList) => [...zajeciaList, zajObject]);
-			})
-		);
+		// zajeciaPromise.then((zajList) =>
+		// 	zajList.forEach((zaj) => {
+		// 		console.log("zajList->zaj:");
+		// 		console.log(zaj);
+		// 		var zajObject = new Zajecia(
+		// 			zaj.id,
+		// 			zaj.nazwa_przedmiotu,
+		// 			zaj.nr_lekcji,
+		// 			zaj.dzien,
+		// 			new Klasa(
+		// 				parseInt(zaj.grade.id),
+		// 				parseInt(zaj.grade.rok),
+		// 				zaj.grade.grupa,
+		// 				parseInt(zaj.grade.liczba_uczniow),
+		// 				zaj.grade.teacherId,
+		// 				zaj.grade.profil
+		// 			),
+		// 			new Nauczyciel(
+		// 				parseInt(zaj.teacher.id),
+		// 				zaj.teacher.imie,
+		// 				zaj.teacher.nazwisko,
+		// 				zaj.teacher.wyksztalcenie,
+		// 				zaj.teacher.email
+		// 			),
+		// 			new Sala(
+		// 				parseInt(zaj.classroom.id),
+		// 				parseInt(zaj.classroom.pietro),
+		// 				parseInt(zaj.classroom.numer),
+		// 				parseInt(zaj.classroom.pojemnosc)
+		// 			),
+		// 			zaj.typZajec
+		// 		);
+		// 		console.log(zajeciaList);
+		// 		setZajeciaList((zajeciaList) => [...zajeciaList, zajObject]);
+		// 	})
+		// );
 	}, []);
 
 	return (
 		<div style={{ backgroundColor: "#f6d7b0", width: "1200px", height: "800px", color: "black" }}>
 			<p>piaskownica do debugu</p>
 			<p>{sala?.Id}</p>
-			{zajeciaList.map((zaj) => {
-				return <KomorkaZajec lesson={zaj}></KomorkaZajec>;
-			})}
+			{/* {zajeciaList.map((zaj) => {
+				return <KomorkaZajec lesson={zaj}></KomorkaZajec>; */}
+			{/* })} */}
 		</div>
 	);
 }
