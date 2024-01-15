@@ -9,7 +9,7 @@ import KomorkaZajec from "./KomorkaZajec";
 
 function Piaskownica(): React.ReactNode {
 	const [sala, setSala] = useState<Sala | null>(null);
-	const [zajeciaList, setZajeciaList] = useState<Zajecia[] | null>([]);
+	const [zajeciaList, setZajeciaList] = useState<any[]>([]);
 
 	//ten hook od czwartej linijki staje sie crashem bandicootem
 	useEffect(() => {
@@ -17,53 +17,49 @@ function Piaskownica(): React.ReactNode {
 		sala1Promise.then((param) => setSala(param));
 
 		let zajeciaPromise = getFetchZajecia();
-		let tempZajList: Zajecia[] = [];
-		zajeciaList?.forEach((el) => {
-			tempZajList.push(el);
-		});
 		zajeciaPromise.then((zajList) =>
-			zajList.forEach((zaj) =>
-				tempZajList.push(
-					new Zajecia(
-						zaj.id,
-						zaj.nazwa_przedmiotu,
-						zaj.nr_lekcji,
-						zaj.dzien,
-						new Klasa(
-							parseInt(zaj.grade.id),
-							parseInt(zaj.grade.rok),
-							zaj.grade.grupa,
-							parseInt(zaj.grade.liczba_uczniow),
-							zaj.grade.teacherId,
-							zaj.grade.profil
-						),
-						new Nauczyciel(
-							parseInt(zaj.teacher.id),
-							zaj.teacher.imie,
-							zaj.teacher.nazwisko,
-							zaj.teacher.wyksztalcenie,
-							zaj.teacher.email
-						),
-						new Sala(
-							parseInt(zaj.classroom.id),
-							parseInt(zaj.classroom.pietro),
-							parseInt(zaj.classroom.numer),
-							parseInt(zaj.classroom.pojemnosc)
-						),
-						zaj.typZajec
-					)
-				)
-			)
+			zajList.forEach((zaj) => {
+				var zajObject = new Zajecia(
+					zaj.id,
+					zaj.nazwa_przedmiotu,
+					zaj.nr_lekcji,
+					zaj.dzien,
+					new Klasa(
+						parseInt(zaj.grade.id),
+						parseInt(zaj.grade.rok),
+						zaj.grade.grupa,
+						parseInt(zaj.grade.liczba_uczniow),
+						zaj.grade.teacherId,
+						zaj.grade.profil
+					),
+					new Nauczyciel(
+						parseInt(zaj.teacher.id),
+						zaj.teacher.imie,
+						zaj.teacher.nazwisko,
+						zaj.teacher.wyksztalcenie,
+						zaj.teacher.email
+					),
+					new Sala(
+						parseInt(zaj.classroom.id),
+						parseInt(zaj.classroom.pietro),
+						parseInt(zaj.classroom.numer),
+						parseInt(zaj.classroom.pojemnosc)
+					),
+					zaj.typZajec
+				);
+				console.log(zajeciaList);
+				setZajeciaList((zajeciaList) => [...zajeciaList, zajObject]);
+			})
 		);
-		setZajeciaList(tempZajList);
-	});
+	}, []);
 
 	return (
 		<div style={{ backgroundColor: "#f6d7b0", width: "1200px", height: "800px", color: "black" }}>
 			<p>piaskownica do debugu</p>
 			<p>{sala?.Id}</p>
-			<KomorkaZajec lesson={zajeciaList[0]}></KomorkaZajec>
-			<KomorkaZajec lesson={zajeciaList[1]}></KomorkaZajec>
+			{zajeciaList.map((zaj) => {
+				return <KomorkaZajec lesson={zaj}></KomorkaZajec>;
+			})}
 		</div>
 	);
 }
