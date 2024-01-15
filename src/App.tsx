@@ -14,6 +14,7 @@ import KomorkaZajec from "./components/KomorkaZajec";
 import { getFetchSala } from "./services/DatabaseService";
 import ListaKlas from "./components/ListaKlas";
 import ListaNauczycieli from "./components/ListaNauczycieli";
+import ListaSal from "./components/ListaSal";
 //kuniec debugowych
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
 				</p>
 				<ListaKlas></ListaKlas>
 				<ListaNauczycieli></ListaNauczycieli>
+				<ListaSal></ListaSal>
 			</header>
 		</div>
 	);
