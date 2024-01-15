@@ -5,21 +5,21 @@
 			"imie": "Adrian",
 			"nazwisko": "Nowak",
 			"wyksztalcenie": "średnie",
-			"email": "kochampiwo@gmail.com"
+			"email": "a.nowak21@gmail.com"
 		},
 		{
 			"id": "2",
 			"imie": "Adam",
 			"nazwisko": "Szulc",
 			"wyksztalcenie": "średnie",
-			"email": "sakirobaki@gmail.com"
+			"email": "a.szulc37@gmail.com"
 		},
 		{
 			"id": "3",
 			"imie": "Andrzej",
-			"nazwisko": "Udo",
+			"nazwisko": "Turkeminstan",
 			"wyksztalcenie": "średnie",
-			"email": "zielonuch@gmail.com"
+			"email": "greenman@gmail.com"
 		}
 	],
 	"grades": [

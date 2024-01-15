@@ -9,7 +9,7 @@ export function getFetchKlasy(): Promise<Klasa[]> {
 		.then((res) => res.json())
 		.then((list) => {
 			let klasaList: Klasa[] = [];
-			list.forEach((params) => {
+			list.forEach((params: any) => {
 				let nKlasa = new Klasa(
 					parseInt(params.id),
 					parseInt(params.rok),
@@ -41,7 +41,20 @@ export function getFetchKlasa(id: number): Promise<Klasa> {
 export function getFetchNauczyciele(): Promise<Nauczyciel[]> {
 	return fetch("http://localhost:3001/teachers")
 		.then((res) => res.json())
-		.catch(console.log) as Promise<Nauczyciel[]>;
+		.then((list) => {
+			let nauczycielList: Nauczyciel[] = [];
+			list.forEach((params: any) => {
+				let nNauczyciel = new Nauczyciel(
+					parseInt(params.id),
+					params.imie,
+					params.nazwisko,
+					params.wyksztalcenie,
+					params.email
+				);
+				nauczycielList.push(nNauczyciel);
+			});
+			return nauczycielList;
+		});
 }
 export function getFetchNauczyciel(id: number): Promise<Nauczyciel> {
 	return fetch(`http://localhost:3001/classrooms/${id}`)

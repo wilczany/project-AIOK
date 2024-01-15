@@ -13,6 +13,7 @@ import Zajecia from "./models/zajecia";
 import KomorkaZajec from "./components/KomorkaZajec";
 import { getFetchSala } from "./services/DatabaseService";
 import ListaKlas from "./components/ListaKlas";
+import ListaNauczycieli from "./components/ListaNauczycieli";
 //kuniec debugowych
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
 					Edit <code>src/App.tsx</code> and save to reload.
 				</p>
 				<ListaKlas></ListaKlas>
+				<ListaNauczycieli></ListaNauczycieli>
 			</header>
 		</div>
 	);
