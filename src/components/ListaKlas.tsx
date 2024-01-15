@@ -7,6 +7,7 @@ function ListaKlas(): React.ReactNode {
 
 	useEffect(() => {
 		let klasyPromise: Promise<Klasa[]> = getFetchKlasy();
+		console.log(klasyPromise);
 		klasyPromise.then((klasy) =>
 			klasy.forEach((klasa) => {
 				let klasaObject: Klasa = Klasa.copyFactory(klasa);
@@ -14,11 +15,12 @@ function ListaKlas(): React.ReactNode {
 				setKlasyList((klasyList) => [...klasyList, klasaObject]);
 			})
 		);
-		console.log(klasyList);
+		// console.log(klasyList);
 	}, []);
 
 	return (
-		<div>
+		<div style={{ backgroundColor: "black" }}>
+			<p>Komponent lista klas</p>
 			{klasyList.map((klasa) => {
 				return (
 					<p>
