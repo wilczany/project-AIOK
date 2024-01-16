@@ -3,189 +3,161 @@ import Klasa from "../models/klasa";
 import Nauczyciel from "../models/nauczyciel";
 import Sala from "../models/sala";
 import Zajecia from "../models/zajecia";
+import axios from "axios";
 
 export function getFetchKlasy(): Promise<Klasa[]> {
-	return fetch("http://localhost:3001/grades")
-		.then((res) => res.json())
-		.then((list) => {
-			let klasaList: Klasa[] = [];
-			list.forEach((params: any) => {
-				let nKlasa = new Klasa(
-					parseInt(params.id),
-					parseInt(params.rok),
-					params.grupa,
-					parseInt(params.liczba_uczniow),
-					parseInt(params.teacherId),
-					params.profil
-				);
-				klasaList.push(nKlasa);
-			});
-			return klasaList;
-		});
-}
-export function getFetchKlasa(id: number): Promise<Klasa> {
-	return fetch(`http://localhost:3001/classrooms/${id}?_embed=teacher`)
-		.then((response) => response.json())
-		.then((params) => {
-			return new Klasa(
+	return axios.get("http://localhost:3001/grades").then((response) => {
+		let klasaList: Klasa[] = [];
+		response.data.forEach((params: any) => {
+			let nKlasa = new Klasa(
 				parseInt(params.id),
 				parseInt(params.rok),
-				params.string,
+				params.grupa,
 				parseInt(params.liczba_uczniow),
 				parseInt(params.teacherId),
 				params.profil
 			);
-		}) as Promise<Klasa>;
+			klasaList.push(nKlasa);
+		});
+		return klasaList;
+	}) as Promise<Klasa[]>;
+}
+
+export function getFetchKlasa(id: number): Promise<Klasa> {
+	return axios.get(`http://localhost:3001/classrooms/${id}?_embed=teacher`).then((response) => {
+		return new Klasa(
+			parseInt(response.data.id),
+			parseInt(response.data.rok),
+			response.data.string,
+			parseInt(response.data.liczba_uczniow),
+			parseInt(response.data.teacherId),
+			response.data.profil
+		);
+	}) as Promise<Klasa>;
 }
 
 export function getFetchNauczyciele(): Promise<Nauczyciel[]> {
-	return fetch("http://localhost:3001/teachers")
-		.then((res) => res.json())
-		.then((list) => {
-			let nauczycielList: Nauczyciel[] = [];
-			list.forEach((params: any) => {
-				let nNauczyciel = new Nauczyciel(
-					parseInt(params.id),
-					params.imie,
-					params.nazwisko,
-					params.wyksztalcenie,
-					params.email
-				);
-				nauczycielList.push(nNauczyciel);
-			});
-			return nauczycielList;
-		});
-}
-export function getFetchNauczyciel(id: number): Promise<Nauczyciel> {
-	return fetch(`http://localhost:3001/classrooms/${id}`)
-		.then((response) => response.json())
-		.then((params) => {
-			return new Nauczyciel(
+	return axios.get("http://localhost:3001/teachers").then((response) => {
+		let nauczycielList: Nauczyciel[] = [];
+		response.data.forEach((params: any) => {
+			let nNauczyciel = new Nauczyciel(
 				parseInt(params.id),
 				params.imie,
 				params.nazwisko,
 				params.wyksztalcenie,
 				params.email
 			);
-		}) as Promise<Nauczyciel>;
+			nauczycielList.push(nNauczyciel);
+		});
+		return nauczycielList;
+	}) as Promise<Nauczyciel[]>;
+}
+export function getFetchNauczyciel(id: number): Promise<Nauczyciel> {
+	return axios.get(`http://localhost:3001/classrooms/${id}`).then((response) => {
+		return new Nauczyciel(
+			parseInt(response.data.id),
+			response.data.imie,
+			response.data.nazwisko,
+			response.data.wyksztalcenie,
+			response.data.email
+		);
+	}) as Promise<Nauczyciel>;
 }
 
-export function getFetchSale() {
-	return fetch("http://localhost:3001/classrooms")
-		.then((res) => res.json())
-		.catch(console.log) as Promise<Sala[]>;
-}
-
-export function getFetchSala(id: number): Promise<Sala> {
-	return fetch(`http://localhost:3001/classrooms/${id}`)
-		.then((response) => response.json())
-		.then((params) => {
-			return new Sala(
+export function getFetchSale(): Promise<Sala[]> {
+	return axios.get("http://localhost:3001/classrooms").then((response) => {
+		let salaList: Sala[] = [];
+		response.data.forEach((params: any) => {
+			let nSala = new Sala(
 				parseInt(params.id),
 				parseInt(params.pietro),
 				parseInt(params.numer),
 				parseInt(params.pojemnosc)
 			);
-		}) as Promise<Sala>;
+			salaList.push(nSala);
+		});
+		return salaList;
+	}) as Promise<Sala[]>;
 }
 
-//brakuje wychowawcy do klasy...
+export function getFetchSala(id: number): Promise<Sala> {
+	return axios.get(`http://localhost:3001/classrooms/${id}`).then((response) => {
+		return new Sala(
+			parseInt(response.data.id),
+			parseInt(response.data.pietro),
+			parseInt(response.data.numer),
+			parseInt(response.data.pojemnosc)
+		);
+	}) as Promise<Sala>;
+}
+
 export function getFetchZajecia(): Promise<Zajecia[]> {
-	return fetch("http://localhost:3001/lessons?_embed=classroom&_embed=teacher&_embed=grade")
-		.then((response) => response.json())
-		.catch(console.log) as Promise<Zajecia[]>;
-	// .then((response) => {
-	// 	let r = response.json();
-	// 	console.log("fetch response", r);
-	// 	return r;
-	// })
-	// .then((zajList) => {
-	// 	zajList.forEach((zaj) => {
-	// 		console.log("fetch zaj", zaj);
-	// 		console.log("nan??", zaj.grade.rok);
-	// 		let wychowawca = getFetchNauczyciel(parseInt(zaj.grade.teacherId));
-	// 		let wychowawcaObject: Nauczyciel;
-	// 		wychowawca.then((w) => (wychowawcaObject = w));
-	// 		let zajObject = new Zajecia(
-	// 			zaj.id,
-	// 			zaj.nazwa_przedmiotu,
-	// 			zaj.nr_lekcji,
-	// 			zaj.dzien,
-	// 			new Klasa(
-	// 				parseInt(zaj.grade.id),
-	// 				parseInt(zaj.grade.rok),
-	// 				zaj.grade.grupa,
-	// 				parseInt(zaj.grade.liczba_uczniow),
-	// 				parseInt(zaj.grade.teacherId),
-	// 				zaj.grade.profil
-	// 			),
-	// 			new Nauczyciel(
-	// 				parseInt(zaj.teacher.id),
-	// 				zaj.teacher.imie,
-	// 				zaj.teacher.nazwisko,
-	// 				zaj.teacher.wyksztalcenie,
-	// 				zaj.teacher.email
-	// 			),
-	// 			new Sala(
-	// 				parseInt(zaj.classroom.id),
-	// 				parseInt(zaj.classroom.pietro),
-	// 				parseInt(zaj.classroom.numer),
-	// 				parseInt(zaj.classroom.pojemnosc)
-	// 			),
-	// 			zaj.typZajec
-	// 		);
-	// 		console.log("zajObject", zajObject);
-	// 		return zajObject;
-	// 	});
-	// });
-	// .then((response) => console.log(response))
-	// .catch(console.log) as Promise<Zajecia[]>;
+	return axios.get("http://localhost:3001/lessons?_embed=classroom&_embed=teacher&_embed=grade").then((response) => {
+		let zajeciaList: Zajecia[] = [];
+		response.data.forEach((params: any) => {
+			let nZajecia = new Zajecia(
+				params.id,
+				params.nazwa_przedmiotu,
+				params.nr_lekcji,
+				params.dzien,
+				new Klasa(
+					parseInt(params.grade.id),
+					parseInt(params.grade.rok),
+					params.grade.grupa,
+					parseInt(params.grade.liczba_uczniow),
+					parseInt(params.grade.teacherId),
+					params.grade.profil
+				),
+				new Nauczyciel(
+					parseInt(params.teacher.id),
+					params.teacher.imie,
+					params.teacher.nazwisko,
+					params.teacher.wyksztalcenie,
+					params.teacher.email
+				),
+				new Sala(
+					parseInt(params.classroom.id),
+					parseInt(params.classroom.pietro),
+					parseInt(params.classroom.numer),
+					parseInt(params.classroom.pojemnosc)
+				),
+				params.typZajec
+			);
+			zajeciaList.push(nZajecia);
+		});
+		return zajeciaList;
+	}) as Promise<Zajecia[]>;
 }
 
-// export function getZajecia(): Promise<Zajecia[]> {
-// 	let g = getFetchZajecia();
-// 	g.for;
-// }
-
-// useEffect(() => {
-// 	let sala1Promise = getFetchSala(1);
-// 	sala1Promise.then((param) => setSala(param));
-
-// 	let zajeciaPromise = getFetchZajecia();
-// 	zajeciaPromise.then((zajList) =>
-// 		zajList.forEach((zaj) => {
-// 			console.log("zajList->zaj:");
-// 			console.log(zaj);
-// 			var zajObject = new Zajecia(
-// 				zaj.id,
-// 				zaj.nazwa_przedmiotu,
-// 				zaj.nr_lekcji,
-// 				zaj.dzien,
-// 				new Klasa(
-// 					parseInt(zaj.grade.id),
-// 					parseInt(zaj.grade.rok),
-// 					zaj.grade.grupa,
-// 					parseInt(zaj.grade.liczba_uczniow),
-// 					zaj.grade.teacherId,
-// 					zaj.grade.profil
-// 				),
-// 				new Nauczyciel(
-// 					parseInt(zaj.teacher.id),
-// 					zaj.teacher.imie,
-// 					zaj.teacher.nazwisko,
-// 					zaj.teacher.wyksztalcenie,
-// 					zaj.teacher.email
-// 				),
-// 				new Sala(
-// 					parseInt(zaj.classroom.id),
-// 					parseInt(zaj.classroom.pietro),
-// 					parseInt(zaj.classroom.numer),
-// 					parseInt(zaj.classroom.pojemnosc)
-// 				),
-// 				zaj.typZajec
-// 			);
-// 			console.log(zajeciaList);
-// 			setZajeciaList((zajeciaList) => [...zajeciaList, zajObject]);
-// 		})
-// 	);
-// }, []);
+export function getFetchZajecie(id: number) {
+	return axios.get(`http://localhost:3001/lessons/${id}`).then((response) => {
+		return new Zajecia(
+			response.data.id,
+			response.data.nazwa_przedmiotu,
+			response.data.nr_lekcji,
+			response.data.dzien,
+			new Klasa(
+				parseInt(response.data.grade.id),
+				parseInt(response.data.grade.rok),
+				response.data.grade.grupa,
+				parseInt(response.data.grade.liczba_uczniow),
+				parseInt(response.data.grade.teacherId),
+				response.data.grade.profil
+			),
+			new Nauczyciel(
+				parseInt(response.data.teacher.id),
+				response.data.teacher.imie,
+				response.data.teacher.nazwisko,
+				response.data.teacher.wyksztalcenie,
+				response.data.teacher.email
+			),
+			new Sala(
+				parseInt(response.data.classroom.id),
+				parseInt(response.data.classroom.pietro),
+				parseInt(response.data.classroom.numer),
+				parseInt(response.data.classroom.pojemnosc)
+			),
+			response.data.typZajec
+		);
+	}) as Promise<Sala>;
+}

@@ -25,13 +25,13 @@ function App() {
 				<p>
 					GitHub Codespaces(niefajne, musiałem naprawiać dla windowsa) <span className="heart">♥️</span> React
 				</p>
-				{/* <Piaskownica></Piaskownica> */}
+				<Piaskownica></Piaskownica>
 				<p className="small">
 					Edit <code>src/App.tsx</code> and save to reload.
 				</p>
-				<ListaKlas></ListaKlas>
+				{/* <ListaKlas></ListaKlas>
 				<ListaNauczycieli></ListaNauczycieli>
-				<ListaSal></ListaSal>
+				<ListaSal></ListaSal> */}
 			</header>
 		</div>
 	);
