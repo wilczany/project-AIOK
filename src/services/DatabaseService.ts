@@ -24,7 +24,7 @@ export function getKlasy(): Promise<Klasa[]> {
 }
 
 export function getKlasa(id: number): Promise<Klasa> {
-	return axios.get(`http://localhost:3001/classrooms/${id}?_embed=teacher`).then((response) => {
+	return axios.get(`http://localhost:3001/grades/${id}`).then((response) => {
 		return new Klasa(
 			parseInt(response.data.id),
 			parseInt(response.data.rok),
@@ -38,7 +38,13 @@ export function getKlasa(id: number): Promise<Klasa> {
 
 export function postKlasa(klasa: Klasa) {
 	axios.post("http://localhost:3001/grades", klasa.JSONized).then((response) => {
-		console.log(response.status, response.data.token);
+		console.log(response);
+	});
+}
+
+export function deleteKlasa(id: number) {
+	axios.delete(`http://localhost:3001/grades/${id}`).then((response) => {
+		console.log(response);
 	});
 }
 
@@ -61,7 +67,7 @@ export function getNauczyciele(): Promise<Nauczyciel[]> {
 }
 
 export function getNauczyciel(id: number): Promise<Nauczyciel> {
-	return axios.get(`http://localhost:3001/classrooms/${id}`).then((response) => {
+	return axios.get(`http://localhost:3001/teachers/${id}`).then((response) => {
 		return new Nauczyciel(
 			parseInt(response.data.id),
 			response.data.imie,
@@ -72,8 +78,14 @@ export function getNauczyciel(id: number): Promise<Nauczyciel> {
 	}) as Promise<Nauczyciel>;
 }
 export function postNauczyciel(nauczyciel: Nauczyciel) {
-	axios.post("http://localhost:3001/grades", nauczyciel.JSONized).then((response) => {
+	axios.post("http://localhost:3001/teachers", nauczyciel.JSONized).then((response) => {
 		console.log(response.status, response.data.token);
+	});
+}
+
+export function deleteNauczyciel(id: number) {
+	axios.delete(`http://localhost:3001/teachers/${id}`).then((response) => {
+		console.log(response);
 	});
 }
 
@@ -106,8 +118,14 @@ export function getSala(id: number): Promise<Sala> {
 }
 
 export function postSala(sala: Sala) {
-	axios.post("http://localhost:3001/grades", sala.JSONized).then((response) => {
+	axios.post("http://localhost:3001/classrooms", sala.JSONized).then((response) => {
 		console.log(response.status, response.data.token);
+	});
+}
+
+export function deleteSala(id: number) {
+	axios.delete(`http://localhost:3001/classrooms/${id}`).then((response) => {
+		console.log(response);
 	});
 }
 
@@ -151,40 +169,48 @@ export function getLekcje(): Promise<Lekcja[]> {
 }
 
 export function getLekcja(id: number) {
-	return axios.get(`http://localhost:3001/lessons/${id}`).then((response) => {
-		return new Lekcja(
-			response.data.id,
-			response.data.nazwa_przedmiotu,
-			response.data.nr_lekcji,
-			response.data.dzien,
-			new Klasa(
-				parseInt(response.data.grade.id),
-				parseInt(response.data.grade.rok),
-				response.data.grade.grupa,
-				parseInt(response.data.grade.liczba_uczniow),
-				parseInt(response.data.grade.teacherId),
-				response.data.grade.profil
-			),
-			new Nauczyciel(
-				parseInt(response.data.teacher.id),
-				response.data.teacher.imie,
-				response.data.teacher.nazwisko,
-				response.data.teacher.wyksztalcenie,
-				response.data.teacher.email
-			),
-			new Sala(
-				parseInt(response.data.classroom.id),
-				parseInt(response.data.classroom.pietro),
-				parseInt(response.data.classroom.numer),
-				parseInt(response.data.classroom.pojemnosc)
-			),
-			response.data.typZajec
-		);
-	}) as Promise<Sala>;
+	return axios
+		.get(`http://localhost:3001/lessons/${id}?_embed=grade&_embed=teacher&_embed=classroom`)
+		.then((response) => {
+			return new Lekcja(
+				response.data.id,
+				response.data.nazwa_przedmiotu,
+				response.data.nr_lekcji,
+				response.data.dzien,
+				new Klasa(
+					parseInt(response.data.grade.id),
+					parseInt(response.data.grade.rok),
+					response.data.grade.grupa,
+					parseInt(response.data.grade.liczba_uczniow),
+					parseInt(response.data.grade.teacherId),
+					response.data.grade.profil
+				),
+				new Nauczyciel(
+					parseInt(response.data.teacher.id),
+					response.data.teacher.imie,
+					response.data.teacher.nazwisko,
+					response.data.teacher.wyksztalcenie,
+					response.data.teacher.email
+				),
+				new Sala(
+					parseInt(response.data.classroom.id),
+					parseInt(response.data.classroom.pietro),
+					parseInt(response.data.classroom.numer),
+					parseInt(response.data.classroom.pojemnosc)
+				),
+				response.data.typZajec
+			);
+		}) as Promise<Sala>;
 }
 
 export function postLekcja(lekcja: Lekcja) {
-	axios.post("http://localhost:3001/grades", lekcja.JSONized).then((response) => {
+	axios.post("http://localhost:3001/lessons", lekcja.JSONized).then((response) => {
 		console.log(response.status, response.data.token);
+	});
+}
+
+export function deleteLekcja(id: number) {
+	axios.delete(`http://localhost:3001/lessons/${id}`).then((response) => {
+		console.log(response);
 	});
 }

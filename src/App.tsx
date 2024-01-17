@@ -4,13 +4,6 @@ import { useState } from "react";
 
 //do debuga tylko
 import Piaskownica from "./components/Piaskownica";
-import DniTygodnia from "./models/dniTygodnia";
-import Klasa from "./models/klasa";
-import Nauczyciel from "./models/nauczyciel";
-import Sala from "./models/sala";
-import TypyZajec from "./models/typyZajec";
-import Zajecia from "./models/lekcja";
-import KomorkaZajec from "./components/KomorkaZajec";
 import ListaKlas from "./components/ListaKlas";
 import ListaNauczycieli from "./components/ListaNauczycieli";
 import ListaSal from "./components/ListaSal";

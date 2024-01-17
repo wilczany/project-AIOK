@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Sala from "../models/sala";
-import { getSala, getKlasy, postKlasa, getLekcje } from "../services/DatabaseService";
+import { getSala, getKlasy, postKlasa, getLekcje, deleteKlasa } from "../services/DatabaseService";
 import Zajecia from "../models/lekcja";
 import Klasa from "../models/klasa";
 import Nauczyciel from "../models/nauczyciel";
@@ -53,7 +53,7 @@ function Piaskownica(): React.ReactNode {
 			})}
 
 			{klasyList.map((klasa) => {
-				return <p>Klasa {klasa.Id}</p>;
+				return <p>Klasa {klasa.Rg}</p>;
 			})}
 		</div>
 	);
