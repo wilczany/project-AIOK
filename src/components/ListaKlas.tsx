@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { getFetchKlasy } from "../services/DatabaseService";
+import { getKlasy } from "../services/DatabaseService";
 import Klasa from "../models/klasa";
 
 function ListaKlas(): React.ReactNode {
 	const [klasyList, setKlasyList] = useState<any[]>([]);
 
 	useEffect(() => {
-		let klasyPromise: Promise<Klasa[]> = getFetchKlasy();
+		let klasyPromise: Promise<Klasa[]> = getKlasy();
 		console.log(klasyPromise);
 		klasyPromise.then((klasy) =>
 			klasy.forEach((klasa) => {
@@ -24,7 +24,7 @@ function ListaKlas(): React.ReactNode {
 			{klasyList.map((klasa) => {
 				return (
 					<p>
-						{klasa.Id}, liczba uczniów {klasa.liczba_uczniow}
+						{klasa.Rg}, liczba uczniów {klasa.liczba_uczniow}
 					</p>
 				);
 			})}

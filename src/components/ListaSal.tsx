@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { getFetchSale } from "../services/DatabaseService";
+import { getSale } from "../services/DatabaseService";
 import Sala from "../models/sala";
 
 function ListaSal(): React.ReactNode {
 	const [saleList, setSaleList] = useState<any[]>([]);
 
 	useEffect(() => {
-		let salePromise: Promise<Sala[]> = getFetchSale();
+		let salePromise: Promise<Sala[]> = getSale();
 		// console.log(salePromise);
 		salePromise.then((sale) =>
 			sale.forEach((sala) => {

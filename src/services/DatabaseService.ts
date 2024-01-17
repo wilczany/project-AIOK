@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import axios from "axios";
 import Klasa from "../models/klasa";
 import Nauczyciel from "../models/nauczyciel";
 import Sala from "../models/sala";
-import Zajecia from "../models/zajecia";
-import axios from "axios";
+import Lekcja from "../models/lekcja";
 
-export function getFetchKlasy(): Promise<Klasa[]> {
+//klasy
+export function getKlasy(): Promise<Klasa[]> {
 	return axios.get("http://localhost:3001/grades").then((response) => {
 		let klasaList: Klasa[] = [];
 		response.data.forEach((params: any) => {
@@ -23,7 +23,7 @@ export function getFetchKlasy(): Promise<Klasa[]> {
 	}) as Promise<Klasa[]>;
 }
 
-export function getFetchKlasa(id: number): Promise<Klasa> {
+export function getKlasa(id: number): Promise<Klasa> {
 	return axios.get(`http://localhost:3001/classrooms/${id}?_embed=teacher`).then((response) => {
 		return new Klasa(
 			parseInt(response.data.id),
@@ -36,7 +36,14 @@ export function getFetchKlasa(id: number): Promise<Klasa> {
 	}) as Promise<Klasa>;
 }
 
-export function getFetchNauczyciele(): Promise<Nauczyciel[]> {
+export function postKlasa(klasa: Klasa) {
+	axios.post("http://localhost:3001/grades", klasa.JSONized).then((response) => {
+		console.log(response.status, response.data.token);
+	});
+}
+
+//nauczyciele
+export function getNauczyciele(): Promise<Nauczyciel[]> {
 	return axios.get("http://localhost:3001/teachers").then((response) => {
 		let nauczycielList: Nauczyciel[] = [];
 		response.data.forEach((params: any) => {
@@ -52,7 +59,8 @@ export function getFetchNauczyciele(): Promise<Nauczyciel[]> {
 		return nauczycielList;
 	}) as Promise<Nauczyciel[]>;
 }
-export function getFetchNauczyciel(id: number): Promise<Nauczyciel> {
+
+export function getNauczyciel(id: number): Promise<Nauczyciel> {
 	return axios.get(`http://localhost:3001/classrooms/${id}`).then((response) => {
 		return new Nauczyciel(
 			parseInt(response.data.id),
@@ -63,8 +71,14 @@ export function getFetchNauczyciel(id: number): Promise<Nauczyciel> {
 		);
 	}) as Promise<Nauczyciel>;
 }
+export function postNauczyciel(nauczyciel: Nauczyciel) {
+	axios.post("http://localhost:3001/grades", nauczyciel.JSONized).then((response) => {
+		console.log(response.status, response.data.token);
+	});
+}
 
-export function getFetchSale(): Promise<Sala[]> {
+//sale
+export function getSale(): Promise<Sala[]> {
 	return axios.get("http://localhost:3001/classrooms").then((response) => {
 		let salaList: Sala[] = [];
 		response.data.forEach((params: any) => {
@@ -80,7 +94,7 @@ export function getFetchSale(): Promise<Sala[]> {
 	}) as Promise<Sala[]>;
 }
 
-export function getFetchSala(id: number): Promise<Sala> {
+export function getSala(id: number): Promise<Sala> {
 	return axios.get(`http://localhost:3001/classrooms/${id}`).then((response) => {
 		return new Sala(
 			parseInt(response.data.id),
@@ -91,11 +105,18 @@ export function getFetchSala(id: number): Promise<Sala> {
 	}) as Promise<Sala>;
 }
 
-export function getFetchZajecia(): Promise<Zajecia[]> {
+export function postSala(sala: Sala) {
+	axios.post("http://localhost:3001/grades", sala.JSONized).then((response) => {
+		console.log(response.status, response.data.token);
+	});
+}
+
+//Lekcja
+export function getLekcje(): Promise<Lekcja[]> {
 	return axios.get("http://localhost:3001/lessons?_embed=classroom&_embed=teacher&_embed=grade").then((response) => {
-		let zajeciaList: Zajecia[] = [];
+		let LekcjaList: Lekcja[] = [];
 		response.data.forEach((params: any) => {
-			let nZajecia = new Zajecia(
+			let nLekcja = new Lekcja(
 				params.id,
 				params.nazwa_przedmiotu,
 				params.nr_lekcji,
@@ -123,15 +144,15 @@ export function getFetchZajecia(): Promise<Zajecia[]> {
 				),
 				params.typZajec
 			);
-			zajeciaList.push(nZajecia);
+			LekcjaList.push(nLekcja);
 		});
-		return zajeciaList;
-	}) as Promise<Zajecia[]>;
+		return LekcjaList;
+	}) as Promise<Lekcja[]>;
 }
 
-export function getFetchZajecie(id: number) {
+export function getLekcja(id: number) {
 	return axios.get(`http://localhost:3001/lessons/${id}`).then((response) => {
-		return new Zajecia(
+		return new Lekcja(
 			response.data.id,
 			response.data.nazwa_przedmiotu,
 			response.data.nr_lekcji,
@@ -160,4 +181,10 @@ export function getFetchZajecie(id: number) {
 			response.data.typZajec
 		);
 	}) as Promise<Sala>;
+}
+
+export function postLekcja(lekcja: Lekcja) {
+	axios.post("http://localhost:3001/grades", lekcja.JSONized).then((response) => {
+		console.log(response.status, response.data.token);
+	});
 }

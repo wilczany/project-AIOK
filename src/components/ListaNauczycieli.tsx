@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { getFetchNauczyciele } from "../services/DatabaseService";
+import { getNauczyciele } from "../services/DatabaseService";
 import Nauczyciel from "../models/nauczyciel";
 
 function ListaNauczycieli(): React.ReactNode {
 	const [nauczycieleList, setNauczycieleList] = useState<any[]>([]);
 
 	useEffect(() => {
-		let nauczycielePromise: Promise<Nauczyciel[]> = getFetchNauczyciele();
+		let nauczycielePromise: Promise<Nauczyciel[]> = getNauczyciele();
 		console.log(nauczycielePromise);
 		nauczycielePromise.then((nauczyciele) =>
 			nauczyciele.forEach((nauczyciel) => {

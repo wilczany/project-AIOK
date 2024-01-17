@@ -15,8 +15,20 @@ class Sala {
 		let newSala = new Sala(sala.id, sala.pietro, sala.numer, sala.pojemnosc);
 		return newSala;
 	}
+	public get JSONized(): any {
+		return {
+			id: String(this.id),
+			pietro: String(this.pietro),
+			numer: String(this.numer),
+			pojemnosc: String(this.pojemnosc),
+		};
+	}
 
-	public get Id(): string {
+	public get Id(): number {
+		return this.id;
+	}
+
+	public get Pn(): string {
 		if (this.numer > 9) return `${this.pietro}${this.numer}`;
 		else return `${this.pietro}0${this.numer}`;
 	}

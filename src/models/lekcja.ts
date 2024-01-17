@@ -2,9 +2,9 @@ import Klasa from "./klasa";
 import Nauczyciel from "./nauczyciel";
 import Sala from "./sala";
 import DniTygodnia from "./dniTygodnia";
-import TypZajec from "./typyZajec";
+import TypLekcji from "./typyLekcji";
 
-class Zajecia {
+class Lekcja {
 	private id: number;
 	private nazwa_przedmiotu: string; // (obowiązkowy, max 30 małych/dużych liter)
 	private nr_lekcji: number;
@@ -12,7 +12,7 @@ class Zajecia {
 	private klasa: Klasa; //(obowiązkowy)
 	private nauczyciel: Nauczyciel; //(obowiązkowy)
 	private sala: Sala; //(obowiązkowy)
-	private typ: TypZajec; //(możliwe 2 do wyboru: konsultacje, zajęcia)
+	private typ: TypLekcji; //(możliwe 2 do wyboru: konsultacje, zajęcia)
 
 	constructor(
 		id: number,
@@ -22,7 +22,7 @@ class Zajecia {
 		klasa: Klasa,
 		nauczyciel: Nauczyciel,
 		sala: Sala,
-		typ: TypZajec
+		typ: TypLekcji
 	) {
 		this.id = id;
 		this.nazwa_przedmiotu = nazwa_przedmiotu;
@@ -34,18 +34,31 @@ class Zajecia {
 		this.typ = typ;
 	}
 
-	public static copyFactory(zaj: Zajecia) {
-		const zajecia = new Zajecia(
-			zaj.id,
-			zaj.nazwa_przedmiotu,
-			zaj.nr_lekcji,
-			zaj.dzien,
-			zaj.klasa,
-			zaj.nauczyciel,
-			zaj.sala,
-			zaj.typ
+	public static copyFactory(lek: Lekcja) {
+		let lekcja = new Lekcja(
+			lek.id,
+			lek.nazwa_przedmiotu,
+			lek.nr_lekcji,
+			lek.dzien,
+			lek.klasa,
+			lek.nauczyciel,
+			lek.sala,
+			lek.typ
 		);
-		return zajecia;
+		return lekcja;
+	}
+
+	public get JSONized(): any {
+		return {
+			id: String(this.id),
+			nazwa_przedmiotu: this.nazwa_przedmiotu,
+			nr_lekcji: String(this.nr_lekcji),
+			dzien: this.dzien,
+			gradeId: String(this.klasa.Id),
+			teacherId: String(this.nauczyciel.Id),
+			classroomId: String(this.sala.Id),
+			typ: this.typ,
+		};
 	}
 
 	public get Klasa(): Klasa {
@@ -65,7 +78,7 @@ class Zajecia {
 		return this.dzien;
 	}
 
-	public get Typ(): TypZajec {
+	public get Typ(): TypLekcji {
 		//nie wiem czy to nie mozna stringa?
 		return this.typ;
 	}
@@ -77,6 +90,10 @@ class Zajecia {
 	public get NrLekcji(): number {
 		return this.nr_lekcji;
 	}
+
+	public get Id(): number {
+		return this.id;
+	}
 }
 
-export default Zajecia;
+export default Lekcja;

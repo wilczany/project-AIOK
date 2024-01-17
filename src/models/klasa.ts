@@ -36,6 +36,17 @@ class Klasa {
 		return newKlasa;
 	}
 
+	public get JSONized(): any {
+		return {
+			id: String(this.id),
+			rok: String(this.rok),
+			grupa: this.grupa,
+			liczba_uczniow: String(this.liczba_uczniow),
+			idWychowawcy: String(this.idWychowawcy),
+			profil: this.profil,
+		};
+	}
+
 	public get Rok(): number {
 		return this.rok;
 	}
@@ -52,8 +63,11 @@ class Klasa {
 		return this.profil;
 	}
 
-	//identyfikator Klasy to połączenie roku oraz grupy
-	public get Id(): string {
+	public get Id(): number {
+		return this.id;
+	}
+
+	public get Rg(): string {
 		return `${this.rok}${this.grupa}` ?? `??`;
 	}
 

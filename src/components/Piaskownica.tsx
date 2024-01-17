@@ -1,30 +1,32 @@
 import React, { useEffect, useState } from "react";
 import Sala from "../models/sala";
-import { getFetchSala, getFetchZajecia, getFetchKlasy } from "../services/DatabaseService";
-import Zajecia from "../models/zajecia";
+import { getSala, getKlasy, postKlasa, getLekcje } from "../services/DatabaseService";
+import Zajecia from "../models/lekcja";
 import Klasa from "../models/klasa";
 import Nauczyciel from "../models/nauczyciel";
-import KomorkaZajec from "./KomorkaZajec";
+import KomorkaLekcji from "./KomorkaLekcji";
+import ListaKlas from "./ListaKlas";
 //komponent od debugowania/zabawy bo szkoda mi smiecic App.tsx
 
 function Piaskownica(): React.ReactNode {
 	const [sala, setSala] = useState<Sala | null>(null);
-	const [zajeciaList, setZajeciaList] = useState<any[]>([]);
+	const [lekcjeList, setLekcjeList] = useState<any[]>([]);
 	const [klasyList, setKlasyList] = useState<any[]>([]);
+	const [i, setI] = useState<number>(4);
 
 	//ten hook od czwartej linijki staje sie crashem bandicootem
 	useEffect(() => {
-		let sala1Promise = getFetchSala(1);
+		let sala1Promise = getSala(1);
 		sala1Promise.then((param) => setSala(param));
 
-		let zajeciaPromise = getFetchZajecia();
-		zajeciaPromise.then((lista) => {
-			lista.forEach((zaj) => {
-				setZajeciaList((zajeciaList) => [...zajeciaList, zaj]);
+		let lekcjePromise = getLekcje();
+		lekcjePromise.then((lista) => {
+			lista.forEach((lekcja) => {
+				setLekcjeList((lekcjeList) => [...lekcjeList, lekcja]);
 			});
 		});
 
-		let klasyPromise = getFetchKlasy();
+		let klasyPromise = getKlasy();
 		klasyPromise.then((lista) => {
 			lista.forEach((klasa) => {
 				setKlasyList((klasyList) => [...klasyList, klasa]);
@@ -32,13 +34,22 @@ function Piaskownica(): React.ReactNode {
 		});
 	}, []);
 
+	// useEffect(() => {
+	// 	if (klasyList.length > 0) {
+	// 		console.log(klasyList[klasyList.length - 1]);
+	// 		let kl = Klasa.copyFactory(klasyList[klasyList.length - 1]);
+	// 		kl.setId = kl.getId + 1;
+	// 		postKlasa(kl);
+	// 	}
+	// }, [klasyList]);
+
 	return (
 		<div style={{ backgroundColor: "#f6d7b0", width: "1200px", height: "800px", color: "black" }}>
 			<p>piaskownica do debugu</p>
 			<p>{sala?.Id}</p>
 
-			{zajeciaList.map((zaj) => {
-				return <KomorkaZajec lesson={zaj}></KomorkaZajec>;
+			{lekcjeList.map((lekcja) => {
+				return <KomorkaLekcji lesson={lekcja}></KomorkaLekcji>;
 			})}
 
 			{klasyList.map((klasa) => {
@@ -47,4 +58,5 @@ function Piaskownica(): React.ReactNode {
 		</div>
 	);
 }
+
 export default Piaskownica;

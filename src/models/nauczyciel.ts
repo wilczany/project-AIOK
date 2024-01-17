@@ -25,6 +25,16 @@ class Nauczyciel {
 		return newNauczyciel;
 	}
 
+	public get JSONized(): any {
+		return {
+			id: String(this.id),
+			imie: this.imie,
+			nazwisko: this.nazwisko,
+			wyksztalcenie: this.wyksztalcenie,
+			email: this.email,
+		};
+	}
+
 	public get FullName(): string {
 		return this.imie + " " + this.nazwisko;
 	}
