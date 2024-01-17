@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Sala from "../models/sala";
-import { getSala, getKlasy, postKlasa, getLekcje, deleteKlasa } from "../services/DatabaseService";
+import { getSala, getKlasy, postKlasa, getLekcje, deleteKlasa, putKlasa } from "../services/DatabaseService";
 import Zajecia from "../models/lekcja";
 import Klasa from "../models/klasa";
 import Nauczyciel from "../models/nauczyciel";
@@ -38,8 +38,8 @@ function Piaskownica(): React.ReactNode {
 	// 	if (klasyList.length > 0) {
 	// 		console.log(klasyList[klasyList.length - 1]);
 	// 		let kl = Klasa.copyFactory(klasyList[klasyList.length - 1]);
-	// 		kl.setId = kl.getId + 1;
-	// 		postKlasa(kl);
+
+	// 		putKlasa(kl);
 	// 	}
 	// }, [klasyList]);
 
