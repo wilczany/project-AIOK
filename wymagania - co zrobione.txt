@@ -4,18 +4,20 @@
 używamy typescript ✔
 
 3. wykorzystanie komponentów prezentacyjnych (co najmniej 2 przypadki) - 1pkt,
-LessonCell,  | 1/2
+KomorkaLekcji,  | 1/2
 
 4. dwukierunkowa komunikacja pomiędzy komponentami  - 1pkt,
 
 5. co najmniej 4 komponenty reużywalne (komponenty, które mogą być użyte bez zmian w kodzie komponentu w innym miejscu projektu) - 2pkt
-LessonCell,  | 1/4
+KomorkaLekcji,  | 1/4
 
 6. modyfikacja danych odbywa się tylko w jednym komponencie - 1pkt
 
 7. operacje modyfikacji danych za pomocą 4 rodzajów żądań http - 2pkt
+wszystkie 4 poprzez axios w DatabaseService ✔
 
 8. żądania do serwera są zapisane w jednym oddzielnym pliku (serwis) - 1pkt
+DatabaseService ✔
 
 9. routing (ścieżki 'routes', w tym jedna z parametrem) - 1pkt
 

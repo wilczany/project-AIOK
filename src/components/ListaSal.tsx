@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getSale } from "../services/DatabaseService";
 import Sala from "../models/sala";
+import DodajSale from "./DodajSale";
 
 function ListaSal(): React.ReactNode {
 	const [saleList, setSaleList] = useState<any[]>([]);
@@ -19,15 +20,31 @@ function ListaSal(): React.ReactNode {
 	}, []);
 
 	return (
-		<div style={{ backgroundColor: "brown" }}>
-			<p>Komponent lista sal</p>
-			{saleList.map((sala) => {
-				return (
-					<p>
-						Piętro {sala.pietro}, pokój numer {sala.numer}
-					</p>
-				);
-			})}
+		<div style={{ backgroundColor: "magenta" }} className="row">
+			<p>Komponent ListaSal</p>
+			<div className="column lista">
+				<h3>Lista sal:</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Sala</th>
+						</tr>
+					</thead>
+					<tbody>
+						{saleList.map((sala) => {
+							return (
+								<tr>
+									<td>{sala.Pn}</td>
+								</tr>
+							);
+						})}
+					</tbody>
+				</table>
+			</div>
+
+			<div className="column dodawanie">
+				<DodajSale></DodajSale>
+			</div>
 		</div>
 	);
 }

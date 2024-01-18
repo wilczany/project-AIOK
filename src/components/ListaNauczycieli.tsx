@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getNauczyciele } from "../services/DatabaseService";
 import Nauczyciel from "../models/nauczyciel";
+import DodajNauczyciela from "./DodajNauczyciela";
 
 function ListaNauczycieli(): React.ReactNode {
 	const [nauczycieleList, setNauczycieleList] = useState<any[]>([]);
@@ -19,15 +20,31 @@ function ListaNauczycieli(): React.ReactNode {
 	}, []);
 
 	return (
-		<div style={{ backgroundColor: "magenta" }}>
-			<p>Komponent lista nauczycieli</p>
-			{nauczycieleList.map((nauczyciel) => {
-				return (
-					<p>
-						{nauczyciel.FullName}, email {nauczyciel.Email}
-					</p>
-				);
-			})}
+		<div style={{ backgroundColor: "cyan" }} className="row">
+			<p>Komponent ListaNauczycieli</p>
+			<div className="column lista">
+				<h3>Lista nauczycieli:</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Imię i nazwisko</th>
+						</tr>
+					</thead>
+					<tbody>
+						{nauczycieleList.map((nauczyciel) => {
+							return (
+								<tr>
+									<td>{nauczyciel.FullName}</td>
+								</tr>
+							);
+						})}
+					</tbody>
+				</table>
+			</div>
+
+			<div className="column dodawanie">
+				<DodajNauczyciela></DodajNauczyciela>
+			</div>
 		</div>
 	);
 }
