@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { getNauczyciele } from "../services/DatabaseService";
-import Nauczyciel from "../models/nauczyciel";
-import DodajNauczyciela from "./DodajNauczyciela";
+import { getNauczyciele } from "../../services/DatabaseService";
+import Nauczyciel from "../../models/nauczyciel";
+import DodajNauczyciela from "../dodaj/DodajNauczyciela";
 
 function ListaNauczycieli(): React.ReactNode {
 	const [listLoaded, setListLoaded] = useState<boolean>(false);

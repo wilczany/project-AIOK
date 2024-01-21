@@ -1,6 +1,6 @@
 import React from "react";
-import Sala from "../models/sala";
-import { postSala } from "../services/DatabaseService";
+import Sala from "../../models/sala";
+import { postSala } from "../../services/DatabaseService";
 
 interface IProps {
 	saleList: Sala[];

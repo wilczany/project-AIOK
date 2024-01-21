@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
-import Klasa from "../models/klasa";
-import { getNauczyciele, postKlasa } from "../services/DatabaseService";
-import Nauczyciel from "../models/nauczyciel";
+import Klasa from "../../models/klasa";
+import { getNauczyciele, postKlasa } from "../../services/DatabaseService";
+import Nauczyciel from "../../models/nauczyciel";
 
 interface IProps {
 	klasyList: Klasa[];

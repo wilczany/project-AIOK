@@ -1,6 +1,6 @@
 import React from "react";
-import Nauczyciel from "../models/nauczyciel";
-import { postNauczyciel } from "../services/DatabaseService";
+import Nauczyciel from "../../models/nauczyciel";
+import { postNauczyciel } from "../../services/DatabaseService";
 
 interface IProps {
 	nauczycieleList: Nauczyciel[];

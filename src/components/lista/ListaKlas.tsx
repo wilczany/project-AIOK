@@ -1,12 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { getKlasy } from "../services/DatabaseService";
-import Klasa from "../models/klasa";
-import DodajKlase from "./DodajKlase";
+import React, { useEffect, useReducer, useState } from "react";
+import { getKlasy } from "../../services/DatabaseService";
+import Klasa from "../../models/klasa";
+import DodajKlase from "../dodaj/DodajKlase";
+
+const useForceRender = () => {
+	const [, forceRender] = useReducer((x) => !x, true);
+	return forceRender;
+};
 
 function ListaKlas(): React.ReactNode {
 	const [klasyList, setKlasyList] = useState<any[]>([]);
 	const [listLoaded, setListLoaded] = useState<boolean>(false);
-	const forceUpdate = React.useReducer(() => ({}), {})[1] as () => void;
+	const forceRender = useForceRender();
 
 	function appendKlasyList(klasa: Klasa) {
 		setKlasyList((klasyList) =>
@@ -15,7 +20,6 @@ function ListaKlas(): React.ReactNode {
 			})
 		);
 		console.log(klasyList);
-		forceUpdate();
 	}
 
 	useEffect(() => {
@@ -29,6 +33,7 @@ function ListaKlas(): React.ReactNode {
 				})
 			);
 			setListLoaded(true);
+			forceRender();
 		}
 	}, [klasyList]);
 

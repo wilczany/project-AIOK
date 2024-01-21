@@ -1,5 +1,5 @@
 import React from "react";
-import Zajecia from "../models/lekcja";
+import Zajecia from "../../models/lekcja";
 
 //prosty przykład jak typować propsy z kochanym typescriptem
 interface Props {

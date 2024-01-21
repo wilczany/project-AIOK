@@ -4,10 +4,10 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { useState } from "react";
 
 //do debuga tylko
-import Piaskownica from "./components/Piaskownica";
-import ListaKlas from "./components/ListaKlas";
-import ListaNauczycieli from "./components/ListaNauczycieli";
-import ListaSal from "./components/ListaSal";
+import Piaskownica from "./components/debug/Piaskownica";
+import ListaKlas from "./components/lista/ListaKlas";
+import ListaNauczycieli from "./components/lista/ListaNauczycieli";
+import ListaSal from "./components/lista/ListaSal";
 import Navbar from "./components/Navbar";
 //kuniec debugowych
 

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import Sala from "../models/sala";
-import { getSala, getKlasy, postKlasa, getLekcje, deleteKlasa, putKlasa } from "../services/DatabaseService";
-import Zajecia from "../models/lekcja";
-import Klasa from "../models/klasa";
-import Nauczyciel from "../models/nauczyciel";
-import KomorkaLekcji from "./KomorkaLekcji";
-import ListaKlas from "./ListaKlas";
+import Sala from "../../models/sala";
+import { getSala, getKlasy, postKlasa, getLekcje, deleteKlasa, putKlasa } from "../../services/DatabaseService";
+import Zajecia from "../../models/lekcja";
+import Klasa from "../../models/klasa";
+import Nauczyciel from "../../models/nauczyciel";
+import KomorkaLekcji from "../tabela/KomorkaLekcji";
+import ListaKlas from "../lista/ListaKlas";
 //komponent od debugowania/zabawy bo szkoda mi smiecic App.tsx
 
 function Piaskownica(): React.ReactNode {

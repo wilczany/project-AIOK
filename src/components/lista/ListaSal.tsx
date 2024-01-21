@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { getSale } from "../services/DatabaseService";
-import Sala from "../models/sala";
-import DodajSale from "./DodajSale";
+import { getSale } from "../../services/DatabaseService";
+import Sala from "../../models/sala";
+import DodajSale from "../dodaj/DodajSale";
 
 function ListaSal(): React.ReactNode {
 	const [saleList, setSaleList] = useState<any[]>([]);
