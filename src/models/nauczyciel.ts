@@ -36,7 +36,7 @@ class Nauczyciel {
 	}
 
 	public get FullName(): string {
-		return this.imie + " " + this.nazwisko;
+		return this.nazwisko + " " + this.imie;
 	}
 
 	public get ShortName(): string {

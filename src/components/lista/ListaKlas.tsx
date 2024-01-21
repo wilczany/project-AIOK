@@ -9,17 +9,11 @@ const useForceRender = () => {
 };
 
 function ListaKlas(): React.ReactNode {
-	const [klasyList, setKlasyList] = useState<any[]>([]);
+	const [klasyList, setKlasyList] = useState<Klasa[]>([]);
 	const [listLoaded, setListLoaded] = useState<boolean>(false);
-	const forceRender = useForceRender();
 
 	function appendKlasyList(klasa: Klasa) {
-		setKlasyList((klasyList) =>
-			[...klasyList, klasa].sort((a, b) => {
-				return b.Rg - a.Rg;
-			})
-		);
-		console.log(klasyList);
+		setKlasyList((klasyList) => [...klasyList, klasa]);
 	}
 
 	useEffect(() => {
@@ -29,11 +23,10 @@ function ListaKlas(): React.ReactNode {
 			klasyPromise.then((klasy) =>
 				klasy.forEach((klasa) => {
 					let klasaObject: Klasa = Klasa.copyFactory(klasa);
-					appendKlasyList(klasaObject);
+					setKlasyList((klasyList) => [...klasyList, klasaObject]);
 				})
 			);
 			setListLoaded(true);
-			forceRender();
 		}
 	}, [klasyList]);
 
@@ -49,15 +42,17 @@ function ListaKlas(): React.ReactNode {
 						</tr>
 					</thead>
 					<tbody>
-						{klasyList.map((klasa) => {
-							return (
-								<tr key={klasa.Id.toString() + klasa.Rg}>
-									{/* po walidacji formularzy nawet samo Id będzie unikalnym kluczem tbh, ale teraz przynajmniej grupuje to co tak samo się ma wyświetlać mimo takich samych id */}
-									{/* dla zainteresowanych https://stackoverflow.com/questions/28329382/understanding-unique-keys-for-array-children-in-react-js */}
-									<td>{klasa.Rg}</td>
-								</tr>
-							);
-						})}
+						{klasyList
+							.sort((a, b) => a.Rg.localeCompare(b.Rg))
+							.map((klasa) => {
+								return (
+									<tr key={klasa.Id.toString() + klasa.Rg}>
+										{/* po walidacji formularzy nawet samo Id będzie unikalnym kluczem tbh, ale teraz przynajmniej grupuje to co tak samo się ma wyświetlać mimo takich samych id */}
+										{/* dla zainteresowanych https://stackoverflow.com/questions/28329382/understanding-unique-keys-for-array-children-in-react-js */}
+										<td>{klasa.Rg}</td>
+									</tr>
+								);
+							})}
 					</tbody>
 				</table>
 			</div>

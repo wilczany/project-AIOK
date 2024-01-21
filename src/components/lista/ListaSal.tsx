@@ -36,14 +36,16 @@ function ListaSal(): React.ReactNode {
 						</tr>
 					</thead>
 					<tbody>
-						{saleList.map((sala) => {
-							return (
-								<tr key={sala.Id.toString() + sala.Pn}>
-									{/* co do klucza odsyłam do pliku ListaKlas */}
-									<td>{sala.Pn}</td>
-								</tr>
-							);
-						})}
+						{saleList
+							.sort((a, b) => a.Pn.localeCompare(b.Pn))
+							.map((sala) => {
+								return (
+									<tr key={sala.Id.toString() + sala.Pn}>
+										{/* co do klucza odsyłam do pliku ListaKlas */}
+										<td>{sala.Pn}</td>
+									</tr>
+								);
+							})}
 					</tbody>
 				</table>
 			</div>

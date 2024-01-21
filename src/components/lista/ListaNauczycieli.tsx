@@ -37,14 +37,16 @@ function ListaNauczycieli(): React.ReactNode {
 						</tr>
 					</thead>
 					<tbody>
-						{nauczycieleList.map((nauczyciel) => {
-							return (
-								<tr key={nauczyciel.Id.toString() + nauczyciel.FullName}>
-									{/* co do klucza odsyłam do pliku ListaKlas */}
-									<td>{nauczyciel.FullName}</td>
-								</tr>
-							);
-						})}
+						{nauczycieleList
+							.sort((a, b) => a.FullName.localeCompare(b.FullName))
+							.map((nauczyciel) => {
+								return (
+									<tr key={nauczyciel.Id.toString() + nauczyciel.FullName}>
+										{/* co do klucza odsyłam do pliku ListaKlas */}
+										<td>{nauczyciel.FullName}</td>
+									</tr>
+								);
+							})}
 					</tbody>
 				</table>
 			</div>
