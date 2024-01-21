@@ -4,20 +4,26 @@ import Nauczyciel from "../models/nauczyciel";
 import DodajNauczyciela from "./DodajNauczyciela";
 
 function ListaNauczycieli(): React.ReactNode {
+	const [listLoaded, setListLoaded] = useState<boolean>(false);
 	const [nauczycieleList, setNauczycieleList] = useState<any[]>([]);
 
+	function appendNauczycieleList(nauczyciel: Nauczyciel) {
+		setNauczycieleList((nauczycieleList) => [...nauczycieleList, nauczyciel]);
+	}
+
 	useEffect(() => {
-		let nauczycielePromise: Promise<Nauczyciel[]> = getNauczyciele();
-		console.log(nauczycielePromise);
-		nauczycielePromise.then((nauczyciele) =>
-			nauczyciele.forEach((nauczyciel) => {
-				let nauczycielObject: Nauczyciel = Nauczyciel.copyFactory(nauczyciel);
-				console.log(nauczycielObject);
-				setNauczycieleList((nauczycieleList) => [...nauczycieleList, nauczycielObject]);
-			})
-		);
-		// console.log(klasyList);
-	}, []);
+		if (!listLoaded) {
+			let nauczycielePromise: Promise<Nauczyciel[]> = getNauczyciele();
+			console.log(nauczycielePromise);
+			nauczycielePromise.then((nauczyciele) =>
+				nauczyciele.forEach((nauczyciel) => {
+					let nauczycielObject: Nauczyciel = Nauczyciel.copyFactory(nauczyciel);
+					appendNauczycieleList(nauczycielObject);
+				})
+			);
+			setListLoaded(true);
+		}
+	}, [nauczycieleList]);
 
 	return (
 		<div style={{ backgroundColor: "cyan" }} className="row">
@@ -33,7 +39,8 @@ function ListaNauczycieli(): React.ReactNode {
 					<tbody>
 						{nauczycieleList.map((nauczyciel) => {
 							return (
-								<tr>
+								<tr key={nauczyciel.Id.toString() + nauczyciel.FullName}>
+									{/* co do klucza odsyłam do pliku ListaKlas */}
 									<td>{nauczyciel.FullName}</td>
 								</tr>
 							);
@@ -43,7 +50,10 @@ function ListaNauczycieli(): React.ReactNode {
 			</div>
 
 			<div className="column dodawanie">
-				<DodajNauczyciela></DodajNauczyciela>
+				<DodajNauczyciela
+					nauczycieleList={nauczycieleList}
+					appendNauczycieleList={appendNauczycieleList}
+				></DodajNauczyciela>
 			</div>
 		</div>
 	);

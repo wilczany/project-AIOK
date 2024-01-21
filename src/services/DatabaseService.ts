@@ -6,7 +6,7 @@ import Lekcja from "../models/lekcja";
 
 //klasy
 export function getKlasy(): Promise<Klasa[]> {
-	return axios.get("http://localhost:3001/grades").then((response) => {
+	return axios.get("http://localhost:3001/grades?_sort=rok,grupa").then((response) => {
 		let klasaList: Klasa[] = [];
 		response.data.forEach((params: any) => {
 			let nKlasa = new Klasa(
@@ -56,7 +56,7 @@ export function putKlasa(klasa: Klasa) {
 
 //nauczyciele
 export function getNauczyciele(): Promise<Nauczyciel[]> {
-	return axios.get("http://localhost:3001/teachers").then((response) => {
+	return axios.get("http://localhost:3001/teachers?_sort=nazwisko,imie").then((response) => {
 		let nauczycielList: Nauczyciel[] = [];
 		response.data.forEach((params: any) => {
 			let nNauczyciel = new Nauczyciel(

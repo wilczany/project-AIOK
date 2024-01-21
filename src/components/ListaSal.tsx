@@ -5,19 +5,24 @@ import DodajSale from "./DodajSale";
 
 function ListaSal(): React.ReactNode {
 	const [saleList, setSaleList] = useState<any[]>([]);
+	const [listLoaded, setListLoaded] = useState<boolean>(false);
+
+	function appendSaleList(sala: Sala) {
+		setSaleList((saleList) => [...saleList, sala]);
+	}
 
 	useEffect(() => {
-		let salePromise: Promise<Sala[]> = getSale();
-		// console.log(salePromise);
-		salePromise.then((sale) =>
-			sale.forEach((sala) => {
-				let salaObject: Sala = Sala.copyFactory(sala);
-				console.log(salaObject);
-				setSaleList((saleList) => [...saleList, salaObject]);
-			})
-		);
-		// console.log(klasyList);
-	}, []);
+		if (!listLoaded) {
+			let salePromise: Promise<Sala[]> = getSale();
+			salePromise.then((sale) =>
+				sale.forEach((sala) => {
+					let salaObject: Sala = Sala.copyFactory(sala);
+					appendSaleList(salaObject);
+				})
+			);
+			setListLoaded(true);
+		}
+	}, [saleList]);
 
 	return (
 		<div style={{ backgroundColor: "magenta" }} className="row">
@@ -33,7 +38,8 @@ function ListaSal(): React.ReactNode {
 					<tbody>
 						{saleList.map((sala) => {
 							return (
-								<tr>
+								<tr key={sala.Id.toString() + sala.Pn}>
+									{/* co do klucza odsyłam do pliku ListaKlas */}
 									<td>{sala.Pn}</td>
 								</tr>
 							);
@@ -43,7 +49,7 @@ function ListaSal(): React.ReactNode {
 			</div>
 
 			<div className="column dodawanie">
-				<DodajSale></DodajSale>
+				<DodajSale saleList={saleList} appendSaleList={appendSaleList}></DodajSale>
 			</div>
 		</div>
 	);

@@ -5,19 +5,32 @@ import DodajKlase from "./DodajKlase";
 
 function ListaKlas(): React.ReactNode {
 	const [klasyList, setKlasyList] = useState<any[]>([]);
+	const [listLoaded, setListLoaded] = useState<boolean>(false);
+	const forceUpdate = React.useReducer(() => ({}), {})[1] as () => void;
 
-	useEffect(() => {
-		let klasyPromise: Promise<Klasa[]> = getKlasy();
-		console.log(klasyPromise);
-		klasyPromise.then((klasy) =>
-			klasy.forEach((klasa) => {
-				let klasaObject: Klasa = Klasa.copyFactory(klasa);
-				console.log(klasaObject);
-				setKlasyList((klasyList) => [...klasyList, klasaObject]);
+	function appendKlasyList(klasa: Klasa) {
+		setKlasyList((klasyList) =>
+			[...klasyList, klasa].sort((a, b) => {
+				return b.Rg - a.Rg;
 			})
 		);
-		// console.log(klasyList);
-	}, []);
+		console.log(klasyList);
+		forceUpdate();
+	}
+
+	useEffect(() => {
+		if (!listLoaded) {
+			let klasyPromise: Promise<Klasa[]> = getKlasy();
+			console.log(klasyPromise);
+			klasyPromise.then((klasy) =>
+				klasy.forEach((klasa) => {
+					let klasaObject: Klasa = Klasa.copyFactory(klasa);
+					appendKlasyList(klasaObject);
+				})
+			);
+			setListLoaded(true);
+		}
+	}, [klasyList]);
 
 	return (
 		<div style={{ backgroundColor: "yellow" }} className="row">
@@ -33,7 +46,9 @@ function ListaKlas(): React.ReactNode {
 					<tbody>
 						{klasyList.map((klasa) => {
 							return (
-								<tr>
+								<tr key={klasa.Id.toString() + klasa.Rg}>
+									{/* po walidacji formularzy nawet samo Id będzie unikalnym kluczem tbh, ale teraz przynajmniej grupuje to co tak samo się ma wyświetlać mimo takich samych id */}
+									{/* dla zainteresowanych https://stackoverflow.com/questions/28329382/understanding-unique-keys-for-array-children-in-react-js */}
 									<td>{klasa.Rg}</td>
 								</tr>
 							);
@@ -43,7 +58,7 @@ function ListaKlas(): React.ReactNode {
 			</div>
 
 			<div className="column dodawanie">
-				<DodajKlase></DodajKlase>
+				<DodajKlase klasyList={klasyList} appendKlasyList={appendKlasyList}></DodajKlase>
 			</div>
 		</div>
 	);

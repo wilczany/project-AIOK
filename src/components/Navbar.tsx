@@ -4,9 +4,15 @@ import { Link } from "react-router-dom";
 function Navbar(): React.ReactNode {
 	return (
 		<div>
-			<Link to="/lista-klas">Lista klas</Link>
-			<Link to="/lista-nauczycieli">Lista nauczycieli</Link>
-			<Link to="/lista-sal">Lista sal</Link>
+			<Link to="/lista-klas">
+				<button>Lista klas</button>
+			</Link>
+			<Link to="/lista-nauczycieli">
+				<button>Lista nauczycieli</button>
+			</Link>
+			<Link to="/lista-sal">
+				<button>Lista sal</button>
+			</Link>
 		</div>
 	);
 }

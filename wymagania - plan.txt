@@ -7,21 +7,23 @@ używamy typescript ✔
 
 3. wykorzystanie komponentów prezentacyjnych (co najmniej 2 przypadki) - 1pkt, 
 koniec końców zobaczymy ile będzie komponentów bez wykorzystania stanu, nie powinno być problemu z osiągnięciem liczby 2 xdd 
-KomorkaZajec, PokazZajecia | 2/2 
+KomorkaLekcji, PokazZajecia | 2/2 
 
 4. dwukierunkowa komunikacja pomiędzy komponentami - 1pkt, 
 “@input” 
 DodajZajecia wybór z list sal/nauczycieli/klas -> zmiana w wyświetlanych rozkładach 
 “@output”  
-? 
+appendXList?
 
 5. co najmniej 4 komponenty reużywalne (komponenty, które mogą być użyte bez zmian w kodzie komponentu w innym miejscu projektu) - 2pkt 
 TablaZajec, KrotkaZajec, PustaKrotkaZajec, RozkladNauczyciela, RozkladSali, RozkladKlasy | 6/4 
 
 6. modyfikacja danych odbywa się tylko w jednym komponencie - 1pkt 
-pewnie nie złapiemy, chuj wie co to znaczy  
+pewnie nie złapiemy, chuj wie co to znaczy 
+listy danych w app -> przekazywanie ich dalej? niemało roboty 
 
 7. operacje modyfikacji danych za pomocą 4 rodzajów żądań http - 2pkt  
+get, post, delete, put w DatabaseService
 
 8. żądania do serwera są zapisane w jednym oddzielnym pliku (serwis) - 1pkt 
 
@@ -31,12 +33,18 @@ PokazZajecia - komponent z parametrem id konkretnych zajęć
 10. wykorzystanie dwóch zmiennych właściwości routingu (np. navigate, params) - 1pkt 
 
 11. brak błędów/ostrzeżeń w konsoli przegladarki - 1pkt  
+reagować na błędy (kopiujesz kurde felek i wklejasz w google jak są okok)
+
+błędy to-do:
+lista-klas:1 Unchecked runtime.lastError: A listener indicated an asynchronous response by returning true, but the message channel closed before a response was received
+^ do stestowania i przekminienia, cos z fetchami pewnie
+DodajNauczyciela i DodajSale uzyc Number() przy tworzeniu(kij wie czemu to wszystko dziala jako string...)
 
 Komponenty: 
 
 TabelaZajec - tabela planu zajęć używana w komponentach rozkładów, uzupełniana krotkami 
 
-KomorkaZajec - komorka w tabeli planu zajęć, przyjmuje obiekt Zajęć, wypisuje {Nazwa Sala.Id Nauczyciel.ShortName} 
+KomorkaLekcji - komorka w tabeli planu zajęć, przyjmuje obiekt Zajęć, wypisuje {Nazwa Sala.Id Nauczyciel.ShortName} 
 
 PokazZajecia - dokladny opis zajęć, routing z parametrem, przykładowo wyświetlany po naciśnięciu na krotkę którychś zajęć  
 
@@ -58,9 +66,9 @@ DodajZajecia2(roboczo) - komponent formularz nowych zajęć - włączany z klikn
 
  
 
-KomorkaZajec - komórka w tabeli planu zajęć, przyjmuje obiekt Zajęć lub nic, w przypadku obiektu zajęć wypisuje {zaj.Nazwa zaj.Sala.Id zaj.Nauczyciel.ShortName} wypełniając krotkę, w przeciwnym wypadku nie wypisuje nic, ale kliknięcie wywołuje DodajZajecia z wypełnionymi danymi pod daną krotkę 
+KomorkaLekcji - komórka w tabeli planu zajęć, przyjmuje obiekt Zajęć lub nic, w przypadku obiektu zajęć wypisuje {zaj.Nazwa zaj.Sala.Id zaj.Nauczyciel.ShortName} wypełniając krotkę, w przeciwnym wypadku nie wypisuje nic, ale kliknięcie wywołuje DodajZajecia z wypełnionymi danymi pod daną krotkę 
 Wady: przestaje być prezentacyjny? 
 Rozwiązanie: oddzielny komponent na pustą krotkę, +1 do reużywalnych 
-PustaKomorkaZajec - komórka w tabeli planu zajęć, nie przyjmuje obiektu Zajęć, nic nie wypisuje, lecz kliknięcie wywołuje DodajZajecia2 z wypełnionymi danymi pod daną krotkę  
+PustaKomorkaLekcji - komórka w tabeli planu zajęć, nie przyjmuje obiektu Zajęć, nic nie wypisuje, lecz kliknięcie wywołuje DodajZajecia2 z wypełnionymi danymi pod daną krotkę  
 
 Komorki mogłyby przyjmować w parametrach przynajmniej współrzędne(kolumna, wiersz) dla organizacji. Współrzędne mogłyby wtedy też trafiać do id etykiet (<span> lub całe <td>) 
