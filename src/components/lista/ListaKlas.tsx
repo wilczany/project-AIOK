@@ -3,11 +3,6 @@ import { getKlasy } from "../../services/DatabaseService";
 import Klasa from "../../models/klasa";
 import DodajKlase from "../dodaj/DodajKlase";
 
-const useForceRender = () => {
-	const [, forceRender] = useReducer((x) => !x, true);
-	return forceRender;
-};
-
 function ListaKlas(): React.ReactNode {
 	const [klasyList, setKlasyList] = useState<Klasa[]>([]);
 	const [listLoaded, setListLoaded] = useState<boolean>(false);

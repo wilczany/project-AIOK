@@ -37,19 +37,19 @@ export function getKlasa(id: number): Promise<Klasa> {
 }
 
 export function postKlasa(klasa: Klasa) {
-	axios.post("http://localhost:3001/grades", klasa.JSONized).then((response) => {
+	return axios.post("http://localhost:3001/grades", klasa.JSONized).then((response) => {
 		console.log(response);
 	});
 }
 
 export function deleteKlasa(id: number) {
-	axios.delete(`http://localhost:3001/grades/${id}`).then((response) => {
+	return axios.delete(`http://localhost:3001/grades/${id}`).then((response) => {
 		console.log(response);
 	});
 }
 
 export function putKlasa(klasa: Klasa) {
-	axios.put(`http://localhost:3001/grades/${klasa.Id}`, klasa.JSONized).then((response) => {
+	return axios.put(`http://localhost:3001/grades/${klasa.Id}`, klasa.JSONized).then((response) => {
 		console.log(response);
 	});
 }
@@ -84,19 +84,19 @@ export function getNauczyciel(id: number): Promise<Nauczyciel> {
 	}) as Promise<Nauczyciel>;
 }
 export function postNauczyciel(nauczyciel: Nauczyciel) {
-	axios.post("http://localhost:3001/teachers", nauczyciel.JSONized).then((response) => {
+	return axios.post("http://localhost:3001/teachers", nauczyciel.JSONized).then((response) => {
 		console.log(response.status, response.data.token);
 	});
 }
 
 export function deleteNauczyciel(id: number) {
-	axios.delete(`http://localhost:3001/teachers/${id}`).then((response) => {
+	return axios.delete(`http://localhost:3001/teachers/${id}`).then((response) => {
 		console.log(response);
 	});
 }
 
 export function putNauczyciel(nauczyciel: Nauczyciel) {
-	axios.put(`http://localhost:3001/teachers/${nauczyciel.Id}`, nauczyciel.JSONized).then((response) => {
+	return axios.put(`http://localhost:3001/teachers/${nauczyciel.Id}`, nauczyciel.JSONized).then((response) => {
 		console.log(response);
 	});
 }
@@ -130,19 +130,19 @@ export function getSala(id: number): Promise<Sala> {
 }
 
 export function postSala(sala: Sala) {
-	axios.post("http://localhost:3001/classrooms", sala.JSONized).then((response) => {
+	return axios.post("http://localhost:3001/classrooms", sala.JSONized).then((response) => {
 		console.log(response.status, response.data.token);
 	});
 }
 
 export function deleteSala(id: number) {
-	axios.delete(`http://localhost:3001/classrooms/${id}`).then((response) => {
+	return axios.delete(`http://localhost:3001/classrooms/${id}`).then((response) => {
 		console.log(response);
 	});
 }
 
 export function putSala(sala: Sala) {
-	axios.put(`http://localhost:3001/classrooms/${sala.Id}`, sala.JSONized).then((response) => {
+	return axios.put(`http://localhost:3001/classrooms/${sala.Id}`, sala.JSONized).then((response) => {
 		console.log(response);
 	});
 }
@@ -222,19 +222,32 @@ export function getLekcja(id: number) {
 }
 
 export function postLekcja(lekcja: Lekcja) {
-	axios.post("http://localhost:3001/lessons", lekcja.JSONized).then((response) => {
+	return axios.post("http://localhost:3001/lessons", lekcja.JSONized).then((response) => {
 		console.log(response.status, response.data.token);
 	});
 }
 
 export function deleteLekcja(id: number) {
-	axios.delete(`http://localhost:3001/lessons/${id}`).then((response) => {
+	return axios.delete(`http://localhost:3001/lessons/${id}`).then((response) => {
 		console.log(response);
 	});
 }
 
 export function putLekcja(lekcja: Lekcja) {
-	axios.put(`http://localhost:3001/lessons/${lekcja.Id}`, lekcja.JSONized).then((response) => {
+	return axios.put(`http://localhost:3001/lessons/${lekcja.Id}`, lekcja.JSONized).then((response) => {
 		console.log(response);
+	});
+}
+
+export function getNextId(typ: string) {
+	//dozwolone typy: grades, lessons, classrooms, teachers
+	//zmienić na enuma
+	return axios.get(`http://localhost:3001/${typ}`).then((response) => {
+		return Math.max.apply(
+			Math,
+			response.data.map(function (o: any) {
+				return Number(o.id) + 1;
+			})
+		);
 	});
 }

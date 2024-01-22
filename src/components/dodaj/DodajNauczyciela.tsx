@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Nauczyciel from "../../models/nauczyciel";
-import { postNauczyciel } from "../../services/DatabaseService";
+import { getNextId, postNauczyciel } from "../../services/DatabaseService";
 
 interface IProps {
 	nauczycieleList: Nauczyciel[];
@@ -8,8 +8,18 @@ interface IProps {
 }
 
 const DodajNauczyciela = (props: IProps) => {
+	const [nextId, setNextId] = useState<number>(0);
+	const [buttonsDisabled, setButtonsDisabled] = useState<boolean>(false);
+
+	useEffect(() => {
+		getNextId("teachers")
+			.then((response) => setNextId(response))
+			.finally(() => console.log(nextId));
+	}, []);
+
 	function handleSubmit(e: React.SyntheticEvent) {
 		e.preventDefault();
+		setButtonsDisabled(true);
 
 		const target = e.target as typeof e.target & {
 			imie: { value: string };
@@ -19,7 +29,7 @@ const DodajNauczyciela = (props: IProps) => {
 		};
 
 		let n: Nauczyciel = new Nauczyciel(
-			0,
+			nextId,
 			target.imie.value,
 			target.nazwisko.value,
 			target.wyksztalcenie.value,
@@ -27,7 +37,10 @@ const DodajNauczyciela = (props: IProps) => {
 		);
 
 		props.appendNauczycieleList(n);
-		postNauczyciel(n);
+		postNauczyciel(n).then((res) => {
+			getNextId("teachers").then((response) => setNextId(response));
+			setButtonsDisabled(false);
+		});
 	}
 
 	return (
@@ -54,8 +67,12 @@ const DodajNauczyciela = (props: IProps) => {
 			</label>
 			<br />
 
-			<button type="reset">Reset form</button>
-			<button type="submit">Submit form</button>
+			<button type="reset" disabled={buttonsDisabled}>
+				Reset form
+			</button>
+			<button type="submit" disabled={buttonsDisabled}>
+				Submit form
+			</button>
 		</form>
 	);
 };

@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Sala from "../../models/sala";
-import { postSala } from "../../services/DatabaseService";
+import { getNextId, postSala } from "../../services/DatabaseService";
 
 interface IProps {
 	saleList: Sala[];
@@ -8,19 +8,35 @@ interface IProps {
 }
 
 const DodajSale = (props: IProps) => {
+	const [nextId, setNextId] = useState<number>(0);
+	const [buttonsDisabled, setButtonsDisabled] = useState<boolean>(false);
+
+	useEffect(() => {
+		getNextId("classrooms")
+			.then((response) => setNextId(response))
+			.finally(() => console.log(nextId));
+	}, []);
+
 	function handleSubmit(e: React.SyntheticEvent) {
 		e.preventDefault();
+		setButtonsDisabled(true);
 
+		// console.log(nextId);
 		const target = e.target as typeof e.target & {
 			pietro: { value: number };
 			numer: { value: number };
 			pojemnosc: { value: number };
 		};
 
-		let s: Sala = new Sala(0, target.pietro.value, target.numer.value, target.pojemnosc.value);
+		if (nextId > 0) {
+			let s: Sala = new Sala(nextId, target.pietro.value, target.numer.value, target.pojemnosc.value);
 
-		props.appendSaleList(s);
-		postSala(s);
+			props.appendSaleList(s);
+			postSala(s).then((res) => {
+				getNextId("classrooms").then((response) => setNextId(response));
+				setButtonsDisabled(false);
+			});
+		}
 	}
 
 	return (
@@ -40,8 +56,12 @@ const DodajSale = (props: IProps) => {
 			</label>
 			<br />
 
-			<button type="reset">Reset form</button>
-			<button type="submit">Submit form</button>
+			<button type="reset" disabled={buttonsDisabled}>
+				Reset form
+			</button>
+			<button type="submit" disabled={buttonsDisabled}>
+				Submit form
+			</button>
 		</form>
 	);
 };

@@ -1,6 +1,6 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Klasa from "../../models/klasa";
-import { getNauczyciele, postKlasa } from "../../services/DatabaseService";
+import { getNauczyciele, getNextId, postKlasa } from "../../services/DatabaseService";
 import Nauczyciel from "../../models/nauczyciel";
 
 interface IProps {
@@ -9,9 +9,15 @@ interface IProps {
 }
 
 const DodajKlase = (props: IProps) => {
+	const [nextId, setNextId] = useState<number>(0);
+	const [buttonsDisabled, setButtonsDisabled] = useState<boolean>(false);
 	const [wychowacy, setWychowawcy] = useState<any[]>([]);
 
 	useEffect(() => {
+		getNextId("grades")
+			.then((response) => setNextId(response))
+			.finally(() => console.log(nextId));
+
 		let nauczycielePromise: Promise<Nauczyciel[]> = getNauczyciele();
 		console.log(nauczycielePromise);
 		nauczycielePromise.then((nauczyciele) =>
@@ -25,6 +31,7 @@ const DodajKlase = (props: IProps) => {
 
 	function handleSubmit(e: React.SyntheticEvent) {
 		e.preventDefault();
+		setButtonsDisabled(true);
 
 		const target = e.target as typeof e.target & {
 			rok: { value: number };
@@ -35,7 +42,7 @@ const DodajKlase = (props: IProps) => {
 		};
 
 		let k: Klasa = new Klasa(
-			0,
+			nextId,
 			Number(target.rok.value),
 			target.grupa.value,
 			Number(target.liczba_uczniow.value),
@@ -45,7 +52,10 @@ const DodajKlase = (props: IProps) => {
 
 		console.log(k);
 		props.appendKlasyList(k);
-		postKlasa(k);
+		postKlasa(k).then((res) => {
+			getNextId("grades").then((response) => setNextId(response));
+			setButtonsDisabled(false);
+		});
 	}
 
 	return (
@@ -85,8 +95,12 @@ const DodajKlase = (props: IProps) => {
 			</label>
 			<br />
 
-			<button type="reset">Reset form</button>
-			<button type="submit">Submit form</button>
+			<button type="reset" disabled={buttonsDisabled}>
+				Reset form
+			</button>
+			<button type="submit" disabled={buttonsDisabled}>
+				Submit form
+			</button>
 		</form>
 	);
 };
