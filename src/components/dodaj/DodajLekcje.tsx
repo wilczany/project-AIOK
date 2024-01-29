@@ -306,7 +306,7 @@ const DodajLekcje = (props: IProps) => {
 				Nazwa przedmiotu:{" "}
 				<input id="nazwa" onFocus={validateNazwa} onChange={validateNazwa} name="nazwa" type="string" />
 				<ValidationInfo status={nazwaMin3} text="Nazwa musi zawierać przynajmniej 3 znaki." />
-				<ValidationInfo status={nazwaMin3} text="Nazwa może zawierać maksymalnie 20 znaków." />
+				<ValidationInfo status={nazwaMax20} text="Nazwa może zawierać maksymalnie 20 znaków." />
 			</label>
 			<br />
 

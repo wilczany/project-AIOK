@@ -30,8 +30,7 @@ function App() {
 					<Route path="/lista-sal" Component={Sale} />
 					<Route path="/rozklady" Component={Rozklady} />
 					<Route path="/kreator-lekcji" Component={KreatorLekcji} />
-					<Route path="/rozklady/:id" element={<OpisLekcji />} />
-					<Route path="/kreator-lekcji/:id" element={<OpisLekcji />} />
+					<Route path="/lekcje/:id" element={<OpisLekcji />} />
 				</Routes>
 			</div>
 		</BrowserRouter>
