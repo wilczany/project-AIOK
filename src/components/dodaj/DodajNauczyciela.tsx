@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Nauczyciel from "../../models/nauczyciel";
 import { emailTaken, getNextId, postNauczyciel } from "../../services/DatabaseService";
 import ValidationInfo from "../ValidationInfo";
+import ValidationInfoHidden from "../ValidationInfoHidden";
 
 interface IProps {
 	appendNauczycieleList(nauczyciel: Nauczyciel): void;
@@ -24,6 +25,7 @@ const DodajNauczyciela = (props: IProps) => {
 	const [emailRegex, setEmailRegex] = useState<boolean>(false);
 	const [emailMax40, setEmailMax40] = useState<boolean>(false);
 	const [emailMin6, setEmailMin6] = useState<boolean>(false);
+	const [emailZajety, setEmailZajety] = useState<boolean>(false);
 
 	useEffect(() => {
 		getNextId("teachers").then((response) => setNextId(response));
@@ -49,6 +51,7 @@ const DodajNauczyciela = (props: IProps) => {
 				target.email.value
 			);
 
+			setEmailZajety(false);
 			emailTaken(n).then((res) => {
 				if (!res) {
 					props.appendNauczycieleList(n);
@@ -57,6 +60,7 @@ const DodajNauczyciela = (props: IProps) => {
 						setButtonsDisabled(false);
 					});
 				} else {
+					setEmailZajety(true);
 					setButtonsDisabled(false);
 				}
 			});
@@ -175,7 +179,7 @@ const DodajNauczyciela = (props: IProps) => {
 			setWyksztalcenieMax20(false);
 		}
 	}
-	//TODO unikalny email
+
 	function validateEmail(e?: React.SyntheticEvent) {
 		let el: HTMLInputElement;
 		if (e) {
@@ -213,15 +217,15 @@ const DodajNauczyciela = (props: IProps) => {
 		<form method="post" onSubmit={handleSubmit}>
 			<label>
 				Imie: <input id="imie" onChange={validateImie} onFocus={validateImie} name="imie" type="string" />
-				<ValidationInfo status={imieAZaz} text="Imie musi składać się z samych liter" />
-				<ValidationInfo status={imiePierwszaDuza} text="Pierwsza litera imienia musi być skapitalizowana" />
-				<ValidationInfo status={imieMin3} text="Imie musi zawierać przynajmniej 3 litery" />
-				<ValidationInfo status={imieMax20} text="Imie może zawierać maksymalnie 20 liter" />
+				<ValidationInfo status={imieAZaz} text="Imie musi składać się z samych liter." />
+				<ValidationInfo status={imiePierwszaDuza} text="Pierwsza litera imienia musi być skapitalizowana." />
+				<ValidationInfo status={imieMin3} text="Imie musi zawierać przynajmniej 3 litery." />
+				<ValidationInfo status={imieMax20} text="Imie może zawierać maksymalnie 20 liter." />
 			</label>
 			<br />
 
 			<label>
-				Nazwisko:
+				Nazwisko:{" "}
 				<input
 					id="nazwisko"
 					onChange={validateNazwisko}
@@ -229,18 +233,18 @@ const DodajNauczyciela = (props: IProps) => {
 					name="nazwisko"
 					type="string"
 				/>
-				<ValidationInfo status={nazwiskoAZaz} text="Nazwisko musi składać się z samych liter" />
+				<ValidationInfo status={nazwiskoAZaz} text="Nazwisko musi składać się z samych liter." />
 				<ValidationInfo
 					status={nazwiskoPierwszaDuza}
-					text="Pierwsza litera nazwiska musi być skapitalizowana"
+					text="Pierwsza litera nazwiska musi być skapitalizowana."
 				/>
-				<ValidationInfo status={nazwiskoMin3} text="Nazwisko musi zawierać przynajmniej 3 litery" />
-				<ValidationInfo status={nazwiskoMax20} text="Nazwisko może zawierać maksymalnie 20 liter" />
+				<ValidationInfo status={nazwiskoMin3} text="Nazwisko musi zawierać przynajmniej 3 litery." />
+				<ValidationInfo status={nazwiskoMax20} text="Nazwisko może zawierać maksymalnie 20 liter." />
 			</label>
 			<br />
 
 			<label>
-				Wykształcenie:
+				Wykształcenie:{" "}
 				<input
 					id="wyksztalcenie"
 					onChange={validateWyksztalcenie}
@@ -248,22 +252,22 @@ const DodajNauczyciela = (props: IProps) => {
 					name="wyksztalcenie"
 					type="string"
 				/>
-				<ValidationInfo status={wyksztalcenieAZaz} text="Wykształcenie musi składać się z samych liter" />
-				<ValidationInfo status={wyksztalcenieMin3} text="Wykształcenie musi zawierać przynajmniej 3 litery" />
-				<ValidationInfo status={wyksztalcenieMax20} text="Wykształcenie może zawierać maksymalnie 20 liter" />
+				<ValidationInfo status={wyksztalcenieAZaz} text="Wykształcenie musi składać się z samych liter." />
+				<ValidationInfo status={wyksztalcenieMin3} text="Wykształcenie musi zawierać przynajmniej 3 litery." />
+				<ValidationInfo status={wyksztalcenieMax20} text="Wykształcenie może zawierać maksymalnie 20 liter." />
 			</label>
 			<br />
 
 			{/*  pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$" required */}
 			<label>
-				Adres e-mail:
+				Adres e-mail:{" "}
 				<input id="email" onChange={validateEmail} onFocus={validateEmail} name="email" type="string" />
 				<ValidationInfo
 					status={emailRegex}
 					text="Adres e-mail musi być w prawidłowym formacie: nazwa@serwis.domena"
 				/>
-				<ValidationInfo status={emailMin6} text="Adres e-mail musi zawierać przynajmniej 6 znaków" />
-				<ValidationInfo status={emailMax40} text="Adres e-mail może zawierać maksymalnie 40 znaków" />
+				<ValidationInfo status={emailMin6} text="Adres e-mail musi zawierać przynajmniej 6 znaków." />
+				<ValidationInfo status={emailMax40} text="Adres e-mail może zawierać maksymalnie 40 znaków." />
 			</label>
 			<br />
 
@@ -273,6 +277,7 @@ const DodajNauczyciela = (props: IProps) => {
 			<button type="submit" disabled={buttonsDisabled}>
 				Submit
 			</button>
+			<ValidationInfoHidden status={emailZajety} text={`Podany adres e-mail jest już zajęty.`} />
 		</form>
 	);
 };

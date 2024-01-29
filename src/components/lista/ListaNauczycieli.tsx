@@ -6,6 +6,7 @@ import DodajNauczyciela from "../dodaj/DodajNauczyciela";
 interface IProps {
 	nauczycieleList: Nauczyciel[];
 	objectOnClick?: (event: SyntheticEvent) => void;
+	controlButtons?: boolean;
 }
 
 const ListaNauczycieli = (props: IProps) => {
@@ -26,6 +27,11 @@ const ListaNauczycieli = (props: IProps) => {
 									{/* co do klucza odsyłam do pliku ListaKlas */}
 									<td data-nauczyciel={JSON.stringify(nauczyciel)} onClick={props.objectOnClick}>
 										{nauczyciel.FullName}
+										{props.controlButtons && (
+											<>
+												<button onClick={props.objectOnClick}>USUŃ</button>
+											</>
+										)}
 									</td>
 								</tr>
 							);

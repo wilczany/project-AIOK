@@ -6,6 +6,7 @@ import DodajSale from "../dodaj/DodajSale";
 interface IProps {
 	saleList: Sala[];
 	objectOnClick?: (event: SyntheticEvent) => void;
+	controlButtons?: boolean;
 }
 
 const ListaSal = (props: IProps) => {
@@ -26,6 +27,11 @@ const ListaSal = (props: IProps) => {
 									{/* co do klucza odsyłam do pliku ListaKlas */}
 									<td data-sala={JSON.stringify(sala)} onClick={props.objectOnClick}>
 										{sala.Pn}
+										{props.controlButtons && (
+											<>
+												<button onClick={props.objectOnClick}>USUŃ</button>
+											</>
+										)}
 									</td>
 								</tr>
 							);

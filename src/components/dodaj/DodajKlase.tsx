@@ -3,6 +3,7 @@ import Klasa from "../../models/klasa";
 import { getNauczyciele, getNextId, gradeTaken, postKlasa } from "../../services/DatabaseService";
 import Nauczyciel from "../../models/nauczyciel";
 import ValidationInfo from "../ValidationInfo";
+import ValidationInfoHidden from "../ValidationInfoHidden";
 
 interface IProps {
 	appendKlasyList(klasa: Klasa): void;
@@ -24,6 +25,7 @@ const DodajKlase = (props: IProps) => {
 	const [wychowawcaIstnieje, setWychowawcaIstnieje] = useState<boolean>(false);
 	const [profilMin3, setProfilMin3] = useState<boolean>(false);
 	const [profilMax20, setProfilMax20] = useState<boolean>(false);
+	const [klasaZajeta, setKlasaZajeta] = useState<boolean>(false);
 
 	useEffect(() => {
 		getNextId("grades").then((response) => setNextId(response));
@@ -78,6 +80,7 @@ const DodajKlase = (props: IProps) => {
 					target.profil.value
 				);
 
+				setKlasaZajeta(false);
 				gradeTaken(k).then((res) => {
 					if (!res) {
 						props.appendKlasyList(k);
@@ -87,6 +90,7 @@ const DodajKlase = (props: IProps) => {
 						});
 					} else {
 						setButtonsDisabled(false);
+						setKlasaZajeta(true);
 					}
 				});
 			}
@@ -94,10 +98,6 @@ const DodajKlase = (props: IProps) => {
 			setButtonsDisabled(false);
 		}
 	}
-
-	//TODO oddzielny komponent ValidationInfoErrorOnly dla np. wychowawcy, gdyż jego błąd powinien się wywołać jedynie w przypadku manipulacji kodem
-	//TODO? blokowanie przycisków, nie jestem pewien czy wymagane - submit przeprowadza ponowną walidację wszystkiego i na podstawie statusów returnuje
-	//TODO unikalny rok+grupa
 
 	function validateRok(e?: React.SyntheticEvent) {
 		let el: HTMLInputElement;
@@ -280,7 +280,7 @@ const DodajKlase = (props: IProps) => {
 
 			{/* min="10" max="32" required */}
 			<label>
-				Liczba uczniów:
+				Liczba uczniów:{" "}
 				<input id="lUcz" name="liczba_uczniow" onFocus={validateLUcz} onChange={validateLUcz} type="number" />
 				<br />
 				<ValidationInfo status={lUcz2Liczba} text="Liczba uczniów musi być dwucyfrową liczbą." />
@@ -289,7 +289,7 @@ const DodajKlase = (props: IProps) => {
 			</label>
 
 			<label>
-				Wychowawca:
+				Wychowawca:{" "}
 				<select
 					id="wychowawca"
 					name="idWychowawcy"
@@ -315,7 +315,7 @@ const DodajKlase = (props: IProps) => {
 
 			{/* maxLength={20} required  */}
 			<label>
-				Profil:
+				Profil:{" "}
 				<input id="profil" name="profil" type="string" onFocus={validateProfil} onChange={validateProfil} />
 				<br />
 				<ValidationInfo status={profilMin3} text="Profil musi zawierać przynajmniej 3 znaki." />
@@ -328,6 +328,7 @@ const DodajKlase = (props: IProps) => {
 			<button type="submit" disabled={buttonsDisabled}>
 				Submit
 			</button>
+			<ValidationInfoHidden status={klasaZajeta} text={`Podana kombinacja roku i grupy jest już zajęta.`} />
 		</form>
 	);
 };

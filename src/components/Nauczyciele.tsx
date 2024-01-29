@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Nauczyciel from "../models/nauczyciel";
-import { getNauczyciele } from "../services/DatabaseService";
+import { deleteNauczyciel, getNauczyciele } from "../services/DatabaseService";
 import ListaNauczycieli from "./lista/ListaNauczycieli";
 import DodajNauczyciela from "./dodaj/DodajNauczyciela";
 
@@ -11,6 +11,15 @@ function Nauczyciele(): React.ReactNode {
 	function appendNauczycieleList(nauczyciel: Nauczyciel) {
 		setNauczycieleList((nauczycieleList) => [...nauczycieleList, nauczyciel]);
 	}
+
+	const objectOnClick = (event: React.SyntheticEvent) => {
+		let el = event.target as Element;
+		let td = el.parentElement;
+		let nauczyciel: Nauczyciel = JSON.parse(td!.getAttribute("data-nauczyciel")!);
+		deleteNauczyciel(nauczyciel.id);
+		setListLoaded(false);
+		setNauczycieleList([]);
+	};
 
 	useEffect(() => {
 		if (!listLoaded) {
@@ -27,7 +36,7 @@ function Nauczyciele(): React.ReactNode {
 
 	return (
 		<>
-			<ListaNauczycieli nauczycieleList={nauczycieleList} />
+			<ListaNauczycieli nauczycieleList={nauczycieleList} objectOnClick={objectOnClick} controlButtons={true} />
 			<DodajNauczyciela appendNauczycieleList={appendNauczycieleList} />
 		</>
 	);

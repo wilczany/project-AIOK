@@ -4,7 +4,7 @@ import Sala from "./sala";
 import DniTygodnia from "./dniTygodnia";
 import TypLekcji from "./typyLekcji";
 
-//GETTERY NAGLE ZACZELY ZWRACAC ZAWSZE UNDEFINED, STAD TE PUBLIC
+//GETTERY NAGLE ZACZELY ZWRACAC UNDEFINED, STAD TE PUBLIC
 class Lekcja {
 	public id: number;
 	public nazwa_przedmiotu: string; // (obowiązkowy, max 30 małych/dużych liter)

@@ -27,8 +27,6 @@ interface IProps {
 	setSelectedSala: Dispatch<SetStateAction<Sala | null>>; //chyba?
 }
 
-//TODO walidacja czy kombinacja dzien - nr lekcji nie jest zajeta; metoda do przeszukania
-
 const DodajLekcje = (props: IProps) => {
 	const [nextId, setNextId] = useState<number>(0);
 	const [buttonsDisabled, setButtonsDisabled] = useState<boolean>(false);
@@ -41,7 +39,7 @@ const DodajLekcje = (props: IProps) => {
 	const [klasaIstnieje, setKlasaIstnieje] = useState<boolean>(false);
 	const [nauczycielIstnieje, setNauczycielIstnieje] = useState<boolean>(false);
 	const [salaIstnieje, setSalaIstnieje] = useState<boolean>(false);
-	const [salaZajeta, setSalaZajeta] = useState<boolean>(true);
+	const [salaZajeta, setSalaZajeta] = useState<boolean>(false);
 	const [typEnum, setTypEnum] = useState<boolean>(false);
 
 	useEffect(() => {
@@ -224,7 +222,7 @@ const DodajLekcje = (props: IProps) => {
 		validateTyp();
 		validateNauczyciel();
 		validateSala();
-		setSalaZajeta(true);
+		setSalaZajeta(false);
 
 		if (
 			nazwaMax20 &&
@@ -260,9 +258,8 @@ const DodajLekcje = (props: IProps) => {
 					target.typ.value
 				);
 
-				lessonTaken(l).then((taken) => {
-					if (taken) {
-						console.log("halo kurwa niezajete");
+				lessonTaken(l).then((notTaken) => {
+					if (notTaken) {
 						setSalaZajeta(true);
 						props.appendLekcjeList(l);
 						postLekcja(l).then((res) => {
@@ -270,8 +267,7 @@ const DodajLekcje = (props: IProps) => {
 							setButtonsDisabled(false);
 						});
 					} else {
-						console.log("halo kurwa zajete");
-						setSalaZajeta(false);
+						setSalaZajeta(true);
 						setButtonsDisabled(false);
 					}
 				});
@@ -307,33 +303,16 @@ const DodajLekcje = (props: IProps) => {
 	return (
 		<form method="post" onSubmit={handleSubmit}>
 			<label>
-				Nazwa przedmiotu:
-				<input
-					id="nazwa"
-					onFocus={validateNazwa}
-					onChange={validateNazwa}
-					name="nazwa"
-					type="string"
-					maxLength={20}
-					required
-				/>
+				Nazwa przedmiotu:{" "}
+				<input id="nazwa" onFocus={validateNazwa} onChange={validateNazwa} name="nazwa" type="string" />
 				<ValidationInfo status={nazwaMin3} text="Nazwa musi zawierać przynajmniej 3 znaki." />
 				<ValidationInfo status={nazwaMin3} text="Nazwa może zawierać maksymalnie 20 znaków." />
 			</label>
 			<br />
 
 			<label>
-				Numer lekcji:
-				<input
-					id="nr_lekcji"
-					onFocus={validateNumer}
-					onChange={validateNumer}
-					name="nr_lekcji"
-					type="number"
-					min={1}
-					max={14}
-					required
-				/>
+				Numer lekcji:{" "}
+				<input id="nr_lekcji" onFocus={validateNumer} onChange={validateNumer} name="nr_lekcji" type="number" />
 				<ValidationInfo status={nrM2Liczba} text="Numer zajęć musi być maksymalnie dwucyfrową liczbą." />
 				<ValidationInfo status={nrMin1} text="Minimalny numer zajęć to 1." />
 				<ValidationInfo status={nrMax14} text="Maksymalny numer zajęć to 14." />
@@ -341,7 +320,7 @@ const DodajLekcje = (props: IProps) => {
 			<br />
 
 			<label>
-				Dzień:
+				Dzień:{" "}
 				<select id="dzien" onFocus={validateDzien} onChange={validateDzien} name="dzien">
 					<option value="pon">Poniedziałek</option>
 					<option value="wt">Wtorek</option>
@@ -357,7 +336,7 @@ const DodajLekcje = (props: IProps) => {
 			<br />
 
 			<label>
-				Klasa:
+				Klasa:{" "}
 				<select id="klasa" name="klasa" onFocus={onKlasaSelect} onChange={onKlasaSelect}>
 					{props.klasyList.map((klasa) => {
 						return (
@@ -373,7 +352,7 @@ const DodajLekcje = (props: IProps) => {
 			<br />
 
 			<label>
-				Nauczyciel:
+				Nauczyciel:{" "}
 				<select id="nauczyciel" name="nauczyciel" onFocus={onNauczycielSelect} onChange={onNauczycielSelect}>
 					{props.nauczycieleList.map((nauczyciel) => {
 						return (
@@ -392,7 +371,7 @@ const DodajLekcje = (props: IProps) => {
 			<br />
 
 			<label>
-				Sala:
+				Sala:{" "}
 				<select id="sala" name="sala" onFocus={onSalaSelect} onChange={onSalaSelect}>
 					{props.saleList.map((sala) => {
 						return (
@@ -408,7 +387,7 @@ const DodajLekcje = (props: IProps) => {
 			<br />
 
 			<label>
-				Typ zajęć:
+				Typ zajęć:{" "}
 				<select id="typ" onFocus={validateTyp} onChange={validateTyp} name="typ">
 					<option value={"zaj"}>Zajęcia</option>
 					<option value={"kon"}>Konsultacje</option>
@@ -418,10 +397,10 @@ const DodajLekcje = (props: IProps) => {
 			<br />
 
 			<button type="reset" disabled={buttonsDisabled}>
-				Reset form
+				Reset
 			</button>
 			<button type="submit" disabled={buttonsDisabled}>
-				Submit form
+				Submit
 			</button>
 			<ValidationInfoHidden status={salaZajeta} text={`Wybrana sala w podanych godzinach jest zajęta`} />
 		</form>

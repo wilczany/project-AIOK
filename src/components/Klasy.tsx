@@ -1,11 +1,12 @@
 import React, { SyntheticEvent, useEffect, useState } from "react";
 import Klasa from "../models/klasa";
-import { getKlasy } from "../services/DatabaseService";
+import { deleteKlasa, getKlasy } from "../services/DatabaseService";
 import ListaKlas from "./lista/ListaKlas";
 import DodajKlase from "./dodaj/DodajKlase";
 
 function Klasy(): React.ReactNode {
 	const [klasyList, setKlasyList] = useState<Klasa[]>([]);
+	const [klasyExtendedList, setKlasyExtendedList] = useState<boolean[]>([]);
 	const [listLoaded, setListLoaded] = useState<boolean>(false);
 
 	function appendKlasyList(klasa: Klasa) {
@@ -13,17 +14,22 @@ function Klasy(): React.ReactNode {
 	}
 
 	const objectOnClick = (event: SyntheticEvent) => {
-		//TODO dodawanie przycisku EDYTUJ oraz USUŃ
+		let el = event.target as Element;
+		let td = el.parentElement;
+		let klasa: Klasa = JSON.parse(td!.getAttribute("data-klasa")!);
+		deleteKlasa(klasa.id);
+		setListLoaded(false);
+		setKlasyList([]);
 	};
 
 	useEffect(() => {
 		if (!listLoaded) {
 			let klasyPromise: Promise<Klasa[]> = getKlasy();
-			console.log(klasyPromise);
 			klasyPromise.then((klasy) =>
 				klasy.forEach((klasa) => {
 					let klasaObject: Klasa = Klasa.copyFactory(klasa);
 					setKlasyList((klasyList) => [...klasyList, klasaObject]);
+					setKlasyExtendedList((klasyExtendedList) => [...klasyExtendedList, false]);
 				})
 			);
 			setListLoaded(true);
@@ -32,7 +38,7 @@ function Klasy(): React.ReactNode {
 
 	return (
 		<>
-			<ListaKlas klasyList={klasyList} />
+			<ListaKlas klasyList={klasyList} objectOnClick={objectOnClick} controlButtons={true} />
 			<DodajKlase appendKlasyList={appendKlasyList} />
 		</>
 	);

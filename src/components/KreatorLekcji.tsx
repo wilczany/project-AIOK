@@ -23,29 +23,6 @@ function KreatorLekcji(): React.ReactNode {
 		setLekcjeList((lekcjeList) => [...lekcjeList, lekcja]);
 	}
 
-	//TODO zamiast objectOnClick na klasie oddzielny handler dla kazdego selecta z podobnym dzialaniem, przypisanie do oddzielnych selected
-	// const objectOnClick = (event: SyntheticEvent) => {
-	// 	let element = event.target as HTMLElement;
-	// 	let data: string | null = element.getAttribute("data-klasa");
-	// 	if (data != null) {
-	// 		let klasa: Klasa = JSON.parse(data);
-	// 		setSelectedObject(klasa);
-	// 		return;
-	// 	}
-	// 	data = element.getAttribute("data-nauczyciel");
-	// 	if (data != null) {
-	// 		let nauczyciel: Nauczyciel = JSON.parse(data);
-	// 		setSelectedObject(nauczyciel);
-	// 		return;
-	// 	}
-	// 	data = element.getAttribute("data-sala");
-	// 	if (data != null) {
-	// 		let sala: Sala = JSON.parse(data);
-	// 		setSelectedObject(sala);
-	// 		return;
-	// 	}
-	// };
-
 	//ładowanie danych
 	useEffect(() => {
 		let klasyPromise: Promise<Klasa[]> = getKlasy();
@@ -133,8 +110,11 @@ function KreatorLekcji(): React.ReactNode {
 				setSelectedNauczyciel={setSelectedNauczyciel}
 				setSelectedSala={setSelectedSala}
 			/>
+			<h2>Rozkład klasy</h2>
 			<Rozklad lekcjeList={selectedLekcjeKlasy}></Rozklad>
+			<h2>Rozkład nauczyciela</h2>
 			<Rozklad lekcjeList={selectedLekcjeNauczyciela}></Rozklad>
+			<h2>Rozkład sali</h2>
 			<Rozklad lekcjeList={selectedLekcjeSali}></Rozklad>
 		</>
 	);

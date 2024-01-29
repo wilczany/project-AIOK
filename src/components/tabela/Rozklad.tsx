@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Lekcja from "../../models/lekcja";
 import DniTygodnia from "../../models/dniTygodnia";
 import KomorkaLekcji from "./KomorkaLekcji";
+import "../../stylesheets/rozklad.css";
 
 interface IProps {
 	lekcjeList: Lekcja[];
@@ -9,10 +10,6 @@ interface IProps {
 
 // komponent zwracający tabelę z rozkładem zajęć z podanymi godzinami oraz dniami wypełnioną na podstawie podanej listy
 const Rozklad = (props: IProps) => {
-	useEffect(() => {
-		console.log(props.lekcjeList);
-	}, [props.lekcjeList]);
-
 	return (
 		<>
 			<table>

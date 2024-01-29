@@ -6,7 +6,7 @@ interface IProps {
 }
 
 const ValidationInfoHidden = (props: IProps) => {
-	return <div>{!props.status && <span style={{ color: "red" }}>{props.text}</span>}</div>;
+	return <div>{props.status && <span style={{ color: "red" }}>{props.text}</span>}</div>;
 };
 
 export default ValidationInfoHidden;

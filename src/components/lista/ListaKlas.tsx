@@ -1,11 +1,12 @@
 import React, { SyntheticEvent, useEffect, useReducer, useState } from "react";
-import { getKlasy } from "../../services/DatabaseService";
+import { deleteKlasa, getKlasy } from "../../services/DatabaseService";
 import Klasa from "../../models/klasa";
 import DodajKlase from "../dodaj/DodajKlase";
 
 interface IProps {
 	klasyList: Klasa[];
 	objectOnClick?: (event: SyntheticEvent) => void;
+	controlButtons?: boolean;
 }
 
 const ListaKlas = (props: IProps) => {
@@ -15,7 +16,7 @@ const ListaKlas = (props: IProps) => {
 				<table>
 					<thead>
 						<tr>
-							<th>Id klasy</th>
+							<th>Klasy</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -28,6 +29,11 @@ const ListaKlas = (props: IProps) => {
 										{/* dla zainteresowanych https://stackoverflow.com/questions/28329382/understanding-unique-keys-for-array-children-in-react-js */}
 										<td data-klasa={JSON.stringify(klasa)} onClick={props.objectOnClick}>
 											{klasa.Rg}
+											{props.controlButtons && (
+												<>
+													<button onClick={props.objectOnClick}>USUŃ</button>
+												</>
+											)}
 										</td>
 									</tr>
 								);

@@ -46,22 +46,19 @@ export function gradeTaken(klasa: Klasa): Promise<boolean> {
 export function postKlasa(klasa: Klasa) {
 	let k: Klasa = Klasa.copyFactory(klasa);
 	return axios.post("http://localhost:3001/grades", k.JSONized).then((response) => {
-		//TODO zwracanie response zamiast logów, obsługa w komponentach
-		console.log(response);
+		return response;
 	});
 }
 
 export function deleteKlasa(id: number) {
 	return axios.delete(`http://localhost:3001/grades/${id}`).then((response) => {
-		//TODO zwracanie response zamiast logów, obsługa w komponentach
-		console.log(response);
+		return response;
 	});
 }
 
 export function putKlasa(klasa: Klasa) {
 	return axios.put(`http://localhost:3001/grades/${klasa.Id}`, klasa.JSONized).then((response) => {
-		//TODO zwracanie response zamiast logów, obsługa w komponentach
-		console.log(response);
+		return response;
 	});
 }
 
@@ -105,22 +102,19 @@ export function getNauczyciel(id: number): Promise<Nauczyciel> {
 export function postNauczyciel(nauczyciel: Nauczyciel) {
 	let n: Nauczyciel = Nauczyciel.copyFactory(nauczyciel);
 	return axios.post("http://localhost:3001/teachers", n.JSONized).then((response) => {
-		//TODO zwracanie response zamiast logów, obsługa w komponentach
-		console.log(response.status, response.data.token);
+		return response;
 	});
 }
 
 export function deleteNauczyciel(id: number) {
 	return axios.delete(`http://localhost:3001/teachers/${id}`).then((response) => {
-		//TODO zwracanie response zamiast logów, obsługa w komponentach
-		console.log(response);
+		return response;
 	});
 }
 
 export function putNauczyciel(nauczyciel: Nauczyciel) {
 	return axios.put(`http://localhost:3001/teachers/${nauczyciel.Id}`, nauczyciel.JSONized).then((response) => {
-		//TODO zwracanie response zamiast logów, obsługa w komponentach
-		console.log(response);
+		return response;
 	});
 }
 
@@ -154,22 +148,19 @@ export function getSala(id: number): Promise<Sala> {
 
 export function postSala(sala: Sala) {
 	return axios.post("http://localhost:3001/classrooms", sala.JSONized).then((response) => {
-		//TODO zwracanie response zamiast logów, obsługa w komponentach
-		console.log(response.status, response.data.token);
+		return response;
 	});
 }
 
 export function deleteSala(id: number) {
 	return axios.delete(`http://localhost:3001/classrooms/${id}`).then((response) => {
-		//TODO zwracanie response zamiast logów, obsługa w komponentach
-		console.log(response);
+		return response;
 	});
 }
 
 export function putSala(sala: Sala) {
 	return axios.put(`http://localhost:3001/classrooms/${sala.Id}`, sala.JSONized).then((response) => {
-		//TODO zwracanie response zamiast logów, obsługa w komponentach
-		console.log(response);
+		return response;
 	});
 }
 
@@ -264,7 +255,6 @@ export function lessonTaken(lekcja: Lekcja): Promise<boolean> {
 			`http://localhost:3001/lessons?nr_lekcji=${lekcja.nr_lekcji}&dzienTygodnia=${lekcja.dzien}&classroomId=${lekcja.sala.id}`
 		)
 		.then((res) => {
-			console.log("penis", res);
 			if (res.data.length == 0) return true;
 			return false;
 		});
@@ -272,28 +262,21 @@ export function lessonTaken(lekcja: Lekcja): Promise<boolean> {
 
 export function postLekcja(lekcja: Lekcja) {
 	let l: Lekcja = Lekcja.copyFactory(lekcja);
-	console.log(l);
-	console.log(l.JSONized);
-	console.log(lekcja.Klasa);
 	let jsonized: any = lekcja.JSONized;
-	console.log(jsonized);
 	return axios.post("http://localhost:3001/lessons", jsonized).then((response) => {
-		//TODO zwracanie response zamiast logów, obsługa w komponentach
-		console.log(response.status, response.data.token);
+		return response;
 	});
 }
 
 export function deleteLekcja(id: number) {
 	return axios.delete(`http://localhost:3001/lessons/${id}`).then((response) => {
-		//TODO zwracanie response zamiast logów, obsługa w komponentach
-		console.log(response);
+		return response;
 	});
 }
 
 export function putLekcja(lekcja: Lekcja) {
 	return axios.put(`http://localhost:3001/lessons/${lekcja.Id}`, lekcja.JSONized).then((response) => {
-		//TODO zwracanie response zamiast logów, obsługa w komponentach
-		console.log(response);
+		return response;
 	});
 }
 

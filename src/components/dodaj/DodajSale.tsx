@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Sala from "../../models/sala";
 import { classroomTaken, getNextId, postSala } from "../../services/DatabaseService";
 import ValidationInfo from "../ValidationInfo";
+import ValidationInfoHidden from "../ValidationInfoHidden";
 
 interface IProps {
 	appendSaleList(sala: Sala): void;
@@ -19,6 +20,7 @@ const DodajSale = (props: IProps) => {
 	const [pojemnosc2Liczba, setPojemnosc2Liczba] = useState<boolean>(false);
 	const [pojemnoscMin10, setPojemnoscMin10] = useState<boolean>(false);
 	const [pojemnoscMax32, setPojemnoscMax32] = useState<boolean>(false);
+	const [pnZajete, setPnZajete] = useState<boolean>(false);
 
 	useEffect(() => {
 		getNextId("classrooms").then((response) => setNextId(response));
@@ -50,6 +52,7 @@ const DodajSale = (props: IProps) => {
 
 			if (nextId > 0) {
 				let s: Sala = new Sala(nextId, target.pietro.value, target.numer.value, target.pojemnosc.value);
+				setPnZajete(false);
 
 				classroomTaken(s).then((res) => {
 					if (!res) {
@@ -59,6 +62,7 @@ const DodajSale = (props: IProps) => {
 							setButtonsDisabled(false);
 						});
 					} else {
+						setPnZajete(true);
 						setButtonsDisabled(false);
 					}
 				});
@@ -193,26 +197,26 @@ const DodajSale = (props: IProps) => {
 		<form method="post" onSubmit={handleSubmit}>
 			{/* min="0" max="3" required */}
 			<label>
-				Piętro:
+				Piętro:{" "}
 				<input id="pietro" onFocus={validatePietro} onChange={validatePietro} name="pietro" type="number" />
-				<ValidationInfo status={pietroM1Cyfra} text="Piętro musi być pojedynczą cyfrą" />
-				<ValidationInfo status={pietroMin0} text="Minimalne piętro to 0" />
-				<ValidationInfo status={pietroMax3} text="Maksymalne piętro to 3" />
+				<ValidationInfo status={pietroM1Cyfra} text="Piętro musi być pojedynczą cyfrą." />
+				<ValidationInfo status={pietroMin0} text="Minimalne piętro to 0." />
+				<ValidationInfo status={pietroMax3} text="Maksymalne piętro to 3." />
 			</label>
 			<br />
 
 			{/* min="1" max="99" required */}
 			<label>
 				Numer: <input id="numer" onFocus={validateNumer} onChange={validateNumer} name="numer" type="number" />
-				<ValidationInfo status={numerM2Liczba} text="Numer musi być maksymalnie dwucyfrową liczbą" />
-				<ValidationInfo status={numerMin1} text="Minimalny numer to 1" />
-				<ValidationInfo status={numerMax99} text="Maksymalny numer to 99" />
+				<ValidationInfo status={numerM2Liczba} text="Numer musi być maksymalnie dwucyfrową liczbą." />
+				<ValidationInfo status={numerMin1} text="Minimalny numer to 1." />
+				<ValidationInfo status={numerMax99} text="Maksymalny numer to 99." />
 			</label>
 			<br />
 
 			{/* min="10" max="32" required */}
 			<label>
-				Pojemność:
+				Pojemność:{" "}
 				<input
 					id="pojemnosc"
 					onFocus={validatePojemnosc}
@@ -220,9 +224,9 @@ const DodajSale = (props: IProps) => {
 					name="pojemnosc"
 					type="number"
 				/>
-				<ValidationInfo status={pojemnosc2Liczba} text="Pojemność musi być dwucyfrową liczbą" />
-				<ValidationInfo status={pojemnoscMin10} text="Minimalna pojemność to 10" />
-				<ValidationInfo status={pojemnoscMax32} text="Maksymalna pojemność to 32" />
+				<ValidationInfo status={pojemnosc2Liczba} text="Pojemność musi być dwucyfrową liczbą." />
+				<ValidationInfo status={pojemnoscMin10} text="Minimalna pojemność to 10." />
+				<ValidationInfo status={pojemnoscMax32} text="Maksymalna pojemność to 32." />
 			</label>
 			<br />
 
@@ -232,6 +236,7 @@ const DodajSale = (props: IProps) => {
 			<button type="submit" disabled={buttonsDisabled}>
 				Submit
 			</button>
+			<ValidationInfoHidden status={pnZajete} text={`Podana kombinacja piętra i numeru sali jest już zajęta.`} />
 		</form>
 	);
 };
