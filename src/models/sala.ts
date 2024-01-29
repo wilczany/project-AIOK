@@ -1,8 +1,10 @@
+//GETTERY NAGLE ZACZELY ZWRACAC ZAWSZE UNDEFINED, STAD TE PUBLIC
+
 class Sala {
-	private id: number;
-	private pietro: number; //(obowiązkowe, od 0 do 3)
-	private numer: number; //(obowiązkowe, od 1 do 99)
-	private pojemnosc: number; //(obowiązkowe, od 10 do 32)
+	public id: number;
+	public pietro: number; //(obowiązkowe, od 0 do 3)
+	public numer: number; //(obowiązkowe, od 1 do 99)
+	public pojemnosc: number; //(obowiązkowe, od 10 do 32)
 
 	constructor(id: number, pietro: number, numer: number, pojemnosc: number) {
 		this.id = id;
@@ -26,6 +28,14 @@ class Sala {
 
 	public get Id(): number {
 		return this.id;
+	}
+
+	public get Pietro(): number {
+		return this.pietro;
+	}
+
+	public get Numer(): number {
+		return this.numer;
 	}
 
 	public get Pn(): string {

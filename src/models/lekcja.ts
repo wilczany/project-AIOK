@@ -4,15 +4,16 @@ import Sala from "./sala";
 import DniTygodnia from "./dniTygodnia";
 import TypLekcji from "./typyLekcji";
 
+//GETTERY NAGLE ZACZELY ZWRACAC ZAWSZE UNDEFINED, STAD TE PUBLIC
 class Lekcja {
-	private id: number;
-	private nazwa_przedmiotu: string; // (obowiązkowy, max 30 małych/dużych liter)
-	private nr_lekcji: number;
-	private dzien: DniTygodnia; //; (obowiązkowy, od poniedziałku do piątku)
-	private klasa: Klasa; //(obowiązkowy)
-	private nauczyciel: Nauczyciel; //(obowiązkowy)
-	private sala: Sala; //(obowiązkowy)
-	private typ: TypLekcji; //(możliwe 2 do wyboru: konsultacje, zajęcia)
+	public id: number;
+	public nazwa_przedmiotu: string; // (obowiązkowy, max 30 małych/dużych liter)
+	public nr_lekcji: number;
+	public dzien: DniTygodnia; //; (obowiązkowy, od poniedziałku do piątku)
+	public klasa: Klasa; //(obowiązkowy)
+	public nauczyciel: Nauczyciel; //(obowiązkowy)
+	public sala: Sala; //(obowiązkowy)
+	public typ: TypLekcji; //(możliwe 2 do wyboru: konsultacje, zajęcia)
 
 	constructor(
 		id: number,
@@ -34,7 +35,7 @@ class Lekcja {
 		this.typ = typ;
 	}
 
-	public static copyFactory(lek: Lekcja) {
+	public static copyFactory(lek: Lekcja): Lekcja {
 		let lekcja = new Lekcja(
 			lek.id,
 			lek.nazwa_przedmiotu,
@@ -51,14 +52,29 @@ class Lekcja {
 	public get JSONized(): any {
 		return {
 			id: String(this.id),
-			nazwa_przedmiotu: this.nazwa_przedmiotu,
+			nazwa: this.nazwa_przedmiotu,
 			nr_lekcji: String(this.nr_lekcji),
-			dzien: this.dzien,
-			gradeId: String(this.klasa.Id),
-			teacherId: String(this.nauczyciel.Id),
-			classroomId: String(this.sala.Id),
+			dzienTygodnia: this.dzien,
+			gradeId: String(this.klasa.id),
+			teacherId: String(this.nauczyciel.id),
+			classroomId: String(this.sala.id),
 			typ: this.typ,
 		};
+	}
+
+	//chciałem użyć instanceof zamiast in, ale niestety po ciągłym false oraz paru testach wyszło, że wszystkie utworzone obiekty były typu Object już przy tworzeniu w DatabaseService... sklonowane tak samo
+	public objectHasLesson(object: Klasa | Nauczyciel | Sala): boolean {
+		if ("idWychowawcy" in object) {
+			if (JSON.stringify(object) === JSON.stringify(this.klasa)) return true;
+		}
+		if ("email" in object) {
+			if (JSON.stringify(object) === JSON.stringify(this.nauczyciel)) return true;
+		}
+		if ("pietro" in object) {
+			if (JSON.stringify(object) === JSON.stringify(this.sala)) return true;
+		}
+
+		return false;
 	}
 
 	public get Klasa(): Klasa {
@@ -74,13 +90,19 @@ class Lekcja {
 	}
 
 	public get Dzien(): DniTygodnia {
-		//nie wiem czy to nie mozna stringa?
 		return this.dzien;
 	}
 
+	public get DzienAsString(): string {
+		return DniTygodnia[this.dzien];
+	}
+
 	public get Typ(): TypLekcji {
-		//nie wiem czy to nie mozna stringa?
 		return this.typ;
+	}
+
+	public get TypAsString(): string {
+		return TypLekcji[this.typ];
 	}
 
 	public get Sala(): Sala {

@@ -36,20 +36,32 @@ export function getKlasa(id: number): Promise<Klasa> {
 	}) as Promise<Klasa>;
 }
 
+export function gradeTaken(klasa: Klasa): Promise<boolean> {
+	// let kl: Klasa = Klasa.copyFactory(klasa); //kocham typescript:)
+	return axios.get(`http://localhost:3001/grades?grupa=${klasa.grupa}&rok=${klasa.rok}`).then((response) => {
+		if (response.data.length > 0) return true;
+		return false;
+	});
+}
+
 export function postKlasa(klasa: Klasa) {
-	return axios.post("http://localhost:3001/grades", klasa.JSONized).then((response) => {
+	let k: Klasa = Klasa.copyFactory(klasa);
+	return axios.post("http://localhost:3001/grades", k.JSONized).then((response) => {
+		//TODO zwracanie response zamiast logów, obsługa w komponentach
 		console.log(response);
 	});
 }
 
 export function deleteKlasa(id: number) {
 	return axios.delete(`http://localhost:3001/grades/${id}`).then((response) => {
+		//TODO zwracanie response zamiast logów, obsługa w komponentach
 		console.log(response);
 	});
 }
 
 export function putKlasa(klasa: Klasa) {
 	return axios.put(`http://localhost:3001/grades/${klasa.Id}`, klasa.JSONized).then((response) => {
+		//TODO zwracanie response zamiast logów, obsługa w komponentach
 		console.log(response);
 	});
 }
@@ -72,6 +84,14 @@ export function getNauczyciele(): Promise<Nauczyciel[]> {
 	}) as Promise<Nauczyciel[]>;
 }
 
+export function emailTaken(nauczyciel: Nauczyciel): Promise<boolean> {
+	let n: Nauczyciel = Nauczyciel.copyFactory(nauczyciel);
+	return axios.get(`http://localhost:3001/teachers?email=${n.Email}`).then((response) => {
+		if (response.data.length > 0) return true;
+		return false;
+	});
+}
+
 export function getNauczyciel(id: number): Promise<Nauczyciel> {
 	return axios.get(`http://localhost:3001/teachers/${id}`).then((response) => {
 		return new Nauczyciel(
@@ -84,19 +104,23 @@ export function getNauczyciel(id: number): Promise<Nauczyciel> {
 	}) as Promise<Nauczyciel>;
 }
 export function postNauczyciel(nauczyciel: Nauczyciel) {
-	return axios.post("http://localhost:3001/teachers", nauczyciel.JSONized).then((response) => {
+	let n: Nauczyciel = Nauczyciel.copyFactory(nauczyciel);
+	return axios.post("http://localhost:3001/teachers", n.JSONized).then((response) => {
+		//TODO zwracanie response zamiast logów, obsługa w komponentach
 		console.log(response.status, response.data.token);
 	});
 }
 
 export function deleteNauczyciel(id: number) {
 	return axios.delete(`http://localhost:3001/teachers/${id}`).then((response) => {
+		//TODO zwracanie response zamiast logów, obsługa w komponentach
 		console.log(response);
 	});
 }
 
 export function putNauczyciel(nauczyciel: Nauczyciel) {
 	return axios.put(`http://localhost:3001/teachers/${nauczyciel.Id}`, nauczyciel.JSONized).then((response) => {
+		//TODO zwracanie response zamiast logów, obsługa w komponentach
 		console.log(response);
 	});
 }
@@ -131,19 +155,30 @@ export function getSala(id: number): Promise<Sala> {
 
 export function postSala(sala: Sala) {
 	return axios.post("http://localhost:3001/classrooms", sala.JSONized).then((response) => {
+		//TODO zwracanie response zamiast logów, obsługa w komponentach
 		console.log(response.status, response.data.token);
 	});
 }
 
 export function deleteSala(id: number) {
 	return axios.delete(`http://localhost:3001/classrooms/${id}`).then((response) => {
+		//TODO zwracanie response zamiast logów, obsługa w komponentach
 		console.log(response);
 	});
 }
 
 export function putSala(sala: Sala) {
 	return axios.put(`http://localhost:3001/classrooms/${sala.Id}`, sala.JSONized).then((response) => {
+		//TODO zwracanie response zamiast logów, obsługa w komponentach
 		console.log(response);
+	});
+}
+
+export function classroomTaken(sala: Sala): Promise<boolean> {
+	// let s: Sala = Sala.copyFactory(sala);
+	return axios.get(`http://localhost:3001/classrooms?pietro=${sala.pietro}&numer=${sala.numer}`).then((response) => {
+		if (response.data.length > 0) return true;
+		return false;
 	});
 }
 
@@ -153,10 +188,10 @@ export function getLekcje(): Promise<Lekcja[]> {
 		let LekcjaList: Lekcja[] = [];
 		response.data.forEach((params: any) => {
 			let nLekcja = new Lekcja(
-				params.id,
-				params.nazwa_przedmiotu,
-				params.nr_lekcji,
-				params.dzien,
+				parseInt(params.id),
+				params.nazwa,
+				parseInt(params.nr_lekcji),
+				params.dzienTygodnia,
 				new Klasa(
 					parseInt(params.grade.id),
 					parseInt(params.grade.rok),
@@ -186,15 +221,15 @@ export function getLekcje(): Promise<Lekcja[]> {
 	}) as Promise<Lekcja[]>;
 }
 
-export function getLekcja(id: number) {
+export function getLekcja(id: number): Promise<Lekcja> {
 	return axios
 		.get(`http://localhost:3001/lessons/${id}?_embed=grade&_embed=teacher&_embed=classroom`)
 		.then((response) => {
-			return new Lekcja(
+			const l: Lekcja = new Lekcja(
 				response.data.id,
-				response.data.nazwa_przedmiotu,
+				response.data.nazwa,
 				response.data.nr_lekcji,
-				response.data.dzien,
+				response.data.dzienTygodnia,
 				new Klasa(
 					parseInt(response.data.grade.id),
 					parseInt(response.data.grade.rok),
@@ -218,23 +253,47 @@ export function getLekcja(id: number) {
 				),
 				response.data.typZajec
 			);
-		}) as Promise<Sala>;
+			return l;
+		}) as Promise<Lekcja>;
+}
+
+export function lessonTaken(lekcja: Lekcja): Promise<boolean> {
+	// let l: Lekcja = Lekcja.copyFactory(lekcja);
+	// let s: Sala = Sala.copyFactory(l.Sala);
+	return axios
+		.get(
+			`http://localhost:3001/lessons?nr_lekcji=${lekcja.nr_lekcji}&dzienTygodnia=${lekcja.dzien}&classroomId=${lekcja.sala.id}`
+		)
+		.then((res) => {
+			console.log("penis", res);
+			if (res.data.length == 0) return true;
+			return false;
+		});
 }
 
 export function postLekcja(lekcja: Lekcja) {
-	return axios.post("http://localhost:3001/lessons", lekcja.JSONized).then((response) => {
+	let l: Lekcja = Lekcja.copyFactory(lekcja);
+	console.log(l);
+	console.log(l.JSONized);
+	console.log(lekcja.Klasa);
+	let jsonized: any = lekcja.JSONized;
+	console.log(jsonized);
+	return axios.post("http://localhost:3001/lessons", jsonized).then((response) => {
+		//TODO zwracanie response zamiast logów, obsługa w komponentach
 		console.log(response.status, response.data.token);
 	});
 }
 
 export function deleteLekcja(id: number) {
 	return axios.delete(`http://localhost:3001/lessons/${id}`).then((response) => {
+		//TODO zwracanie response zamiast logów, obsługa w komponentach
 		console.log(response);
 	});
 }
 
 export function putLekcja(lekcja: Lekcja) {
 	return axios.put(`http://localhost:3001/lessons/${lekcja.Id}`, lekcja.JSONized).then((response) => {
+		//TODO zwracanie response zamiast logów, obsługa w komponentach
 		console.log(response);
 	});
 }

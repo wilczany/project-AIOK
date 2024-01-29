@@ -1,12 +1,13 @@
 import Nauczyciel from "./nauczyciel";
 
+//GETTERY NAGLE ZACZELY ZWRACAC ZAWSZE UNDEFINED, STAD TE PUBLIC
 class Klasa {
-	private id: number;
-	private rok: number; //(obowiązkowe, od 1 do 8)
-	private grupa: string; //(obowiązkowe, od A do Z)
-	private liczba_uczniow: number; //(obowiązkowe, od 10 do max 32)
-	private idWychowawcy: number; //(obowiązkowe)
-	private profil: string; //(max 20 małych/dużych liter)
+	public id: number;
+	public rok: number; //(obowiązkowe, od 1 do 8)
+	public grupa: string; //(obowiązkowe, od A do Z)
+	public liczba_uczniow: number; //(obowiązkowe, od 10 do max 32)
+	public idWychowawcy: number; //(obowiązkowe)
+	public profil: string; //(max 20 małych/dużych liter)
 
 	public constructor(
 		id: number,

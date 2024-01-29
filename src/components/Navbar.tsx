@@ -13,6 +13,12 @@ function Navbar(): React.ReactNode {
 			<Link to="/lista-sal">
 				<button>Lista sal</button>
 			</Link>
+			<Link to="/rozklady">
+				<button>Rozkłady</button>
+			</Link>
+			<Link to="/kreator-lekcji">
+				<button>Kreator lekcji</button>
+			</Link>
 		</div>
 	);
 }

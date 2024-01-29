@@ -1,10 +1,11 @@
+//GETTERY NAGLE ZACZELY ZWRACAC ZAWSZE UNDEFINED, STAD TE PUBLIC
+
 class Nauczyciel {
-	// private static id_indexer: number = 1;
-	private id: number;
-	private imie: string; //(obowiązkowe, max 20 małych/dużych liter)
-	private nazwisko: string; //(obowiązkowe, max 20 małych/dużych liter)
-	private wyksztalcenie: string; //(obowiązkowe, max 20 małych/dużych liter)
-	private email: string; // ValidEmailString; //(obowiązkowe, max 40 znaków)
+	public id: number;
+	public imie: string; //(obowiązkowe, max 20 małych/dużych liter)
+	public nazwisko: string; //(obowiązkowe, max 20 małych/dużych liter)
+	public wyksztalcenie: string; //(obowiązkowe, max 20 małych/dużych liter)
+	public email: string; // ValidEmailString; //(obowiązkowe, max 40 znaków)
 
 	constructor(id: number, imie: string, nazwisko: string, wyksztalcenie: string, email: string) {
 		this.imie = imie;

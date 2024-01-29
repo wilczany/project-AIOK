@@ -1,18 +1,20 @@
-enum GodzinyLekcyjne {
-    l1 = '8:30',
-    l2 = '9:15',
-    l3 = '10:15',
-    l4 = '11:00',
-    l5 = '12:00',
-    l6 = '12:45',
-    l7 = '14:00',
-    l8 = '14:45',
-    l9 = '16:00',
-    l10 = '16:45',
-    l11 = '17:40',
-    l12 = '18:25',
-    l13 = '19:20',
-    l14 = '20:05',
-}
+import GodzinaLekcyjna from "./godzinaLekcyjna";
 
-export default GodzinyLekcyjne
+const godzinyLekcyjne: GodzinaLekcyjna[] = [
+	new GodzinaLekcyjna(8, 30),
+	new GodzinaLekcyjna(9, 15),
+	new GodzinaLekcyjna(10, 15),
+	new GodzinaLekcyjna(11, 0),
+	new GodzinaLekcyjna(12, 0),
+	new GodzinaLekcyjna(12, 45),
+	new GodzinaLekcyjna(14, 0),
+	new GodzinaLekcyjna(14, 45),
+	new GodzinaLekcyjna(16, 0),
+	new GodzinaLekcyjna(16, 45),
+	new GodzinaLekcyjna(17, 40),
+	new GodzinaLekcyjna(18, 25),
+	new GodzinaLekcyjna(19, 20),
+	new GodzinaLekcyjna(20, 5),
+];
+
+export default godzinyLekcyjne;
