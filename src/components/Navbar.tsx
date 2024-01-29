@@ -1,10 +1,12 @@
 import "../stylesheets/navbar.css";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Navbar(): React.ReactNode {
+	const navigate = useNavigate();
 	return (
 		<div className="navbar">
+			<br />
 			<Link to="/lista-klas">
 				<button>Lista klas</button>
 			</Link>

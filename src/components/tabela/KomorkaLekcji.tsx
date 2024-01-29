@@ -11,11 +11,15 @@ interface IProps {
 // używalny w tabeli lekcji klasy, nauczyciela oraz sali, bo przyjmuje jedynie lekcję do sformatowania oraz wypisania w krótkim formacie
 // komponent prezentacyjny 1/2; komponent reużywalny 1/4
 function KomorkaLekcji({ lesson }: IProps): React.ReactNode {
-	return (
-		<Link to={"/rozklady/" + lesson?.Id}>
-			{lesson?.Nazwa} {lesson?.Sala.Pn} {lesson?.Nauczyciel.ShortName}
-		</Link>
-	);
+	if (typeof lesson != "undefined") {
+		return (
+			<Link to={"/lekcje/" + lesson?.Id}>
+				{lesson?.Nazwa} {lesson?.Sala.Pn} {lesson?.Nauczyciel.ShortName}
+			</Link>
+		);
+	} else {
+		return <></>;
+	}
 }
 
 export default KomorkaLekcji;

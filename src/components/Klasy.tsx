@@ -23,6 +23,7 @@ function Klasy(): React.ReactNode {
 	};
 
 	useEffect(() => {
+		document.title = "Klasy";
 		if (!listLoaded) {
 			let klasyPromise: Promise<Klasa[]> = getKlasy();
 			klasyPromise.then((klasy) =>

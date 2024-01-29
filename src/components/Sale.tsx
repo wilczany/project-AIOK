@@ -22,6 +22,7 @@ function Sale(): React.ReactNode {
 	};
 
 	useEffect(() => {
+		document.title = "Sale";
 		if (!listLoaded) {
 			let salePromise: Promise<Sala[]> = getSale();
 			salePromise.then((sale) =>

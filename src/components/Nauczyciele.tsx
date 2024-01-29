@@ -22,6 +22,7 @@ function Nauczyciele(): React.ReactNode {
 	};
 
 	useEffect(() => {
+		document.title = "Nauczyciele";
 		if (!listLoaded) {
 			let nauczycielePromise: Promise<Nauczyciel[]> = getNauczyciele();
 			nauczycielePromise.then((nauczyciele) =>

@@ -25,6 +25,7 @@ function KreatorLekcji(): React.ReactNode {
 
 	//ładowanie danych
 	useEffect(() => {
+		document.title = "Kreator zajęć";
 		let klasyPromise: Promise<Klasa[]> = getKlasy();
 		klasyPromise
 			.then((klasy) =>

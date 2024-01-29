@@ -10,9 +10,9 @@ const ValidationInfo = (props: IProps) => {
 		<div>
 			{props.status ? (
 				// <span hidden={true} style={{ color: "green" }}>
-				<span style={{ color: "green" }}>{props.text}</span>
+				<span style={{ color: "#006600" }}>{props.text}</span>
 			) : (
-				<span style={{ color: "red" }}>{props.text}</span>
+				<span style={{ color: "#BD0000" }}>{props.text}</span>
 			)}
 		</div>
 	);

@@ -51,6 +51,7 @@ function Rozklady(): React.ReactNode {
 
 	//ładowanie danych
 	useEffect(() => {
+		document.title = "Rozkłady zajęć";
 		let klasyPromise: Promise<Klasa[]> = getKlasy();
 		klasyPromise.then((klasy) =>
 			klasy.forEach((klasa) => {

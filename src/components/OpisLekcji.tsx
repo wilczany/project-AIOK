@@ -37,7 +37,7 @@ const OpisLekcji = () => {
 	}, []);
 
 	return (
-		<>
+		<div className="opis">
 			{!properId && <h3>Błąd przy wczytywaniu lekcji o podanym id.</h3>}
 			{properId && (
 				<>
@@ -54,7 +54,7 @@ const OpisLekcji = () => {
 					<p>Sala: {lekcja?.Sala.Pn}</p>
 				</>
 			)}
-		</>
+		</div>
 	);
 };
 
