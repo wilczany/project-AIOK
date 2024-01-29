@@ -37,7 +37,6 @@ export function getKlasa(id: number): Promise<Klasa> {
 }
 
 export function gradeTaken(klasa: Klasa): Promise<boolean> {
-	// let kl: Klasa = Klasa.copyFactory(klasa); //kocham typescript:)
 	return axios.get(`http://localhost:3001/grades?grupa=${klasa.grupa}&rok=${klasa.rok}`).then((response) => {
 		if (response.data.length > 0) return true;
 		return false;

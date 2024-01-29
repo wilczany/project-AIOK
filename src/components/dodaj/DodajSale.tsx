@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Sala from "../../models/sala";
-import { getNextId, postSala } from "../../services/DatabaseService";
+import { classroomTaken, getNextId, postSala } from "../../services/DatabaseService";
 import ValidationInfo from "../ValidationInfo";
 
 interface IProps {
@@ -51,10 +51,16 @@ const DodajSale = (props: IProps) => {
 			if (nextId > 0) {
 				let s: Sala = new Sala(nextId, target.pietro.value, target.numer.value, target.pojemnosc.value);
 
-				props.appendSaleList(s);
-				postSala(s).then((res) => {
-					getNextId("classrooms").then((response) => setNextId(response));
-					setButtonsDisabled(false);
+				classroomTaken(s).then((res) => {
+					if (!res) {
+						props.appendSaleList(s);
+						postSala(s).then((res) => {
+							getNextId("classrooms").then((response) => setNextId(response));
+							setButtonsDisabled(false);
+						});
+					} else {
+						setButtonsDisabled(false);
+					}
 				});
 			}
 		} else {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Nauczyciel from "../../models/nauczyciel";
-import { getNextId, postNauczyciel } from "../../services/DatabaseService";
+import { emailTaken, getNextId, postNauczyciel } from "../../services/DatabaseService";
 import ValidationInfo from "../ValidationInfo";
 
 interface IProps {
@@ -49,10 +49,16 @@ const DodajNauczyciela = (props: IProps) => {
 				target.email.value
 			);
 
-			props.appendNauczycieleList(n);
-			postNauczyciel(n).then((res) => {
-				getNextId("teachers").then((response) => setNextId(response));
-				setButtonsDisabled(false);
+			emailTaken(n).then((res) => {
+				if (!res) {
+					props.appendNauczycieleList(n);
+					postNauczyciel(n).then((res) => {
+						getNextId("teachers").then((response) => setNextId(response));
+						setButtonsDisabled(false);
+					});
+				} else {
+					setButtonsDisabled(false);
+				}
 			});
 		}
 	}

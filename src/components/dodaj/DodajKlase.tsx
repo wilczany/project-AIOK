@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Klasa from "../../models/klasa";
-import { getNauczyciele, getNextId, postKlasa } from "../../services/DatabaseService";
+import { getNauczyciele, getNextId, gradeTaken, postKlasa } from "../../services/DatabaseService";
 import Nauczyciel from "../../models/nauczyciel";
 import ValidationInfo from "../ValidationInfo";
 
@@ -78,10 +78,16 @@ const DodajKlase = (props: IProps) => {
 					target.profil.value
 				);
 
-				props.appendKlasyList(k);
-				postKlasa(k).then((res) => {
-					getNextId("grades").then((response) => setNextId(response));
-					setButtonsDisabled(false);
+				gradeTaken(k).then((res) => {
+					if (!res) {
+						props.appendKlasyList(k);
+						postKlasa(k).then((res) => {
+							getNextId("grades").then((response) => setNextId(response));
+							setButtonsDisabled(false);
+						});
+					} else {
+						setButtonsDisabled(false);
+					}
 				});
 			}
 		} else {
