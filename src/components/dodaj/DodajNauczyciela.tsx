@@ -35,35 +35,59 @@ const DodajNauczyciela = (props: IProps) => {
 		e.preventDefault();
 		setButtonsDisabled(true);
 
-		const target = e.target as typeof e.target & {
-			imie: { value: string };
-			nazwisko: { value: string };
-			wyksztalcenie: { value: string };
-			email: { value: string };
-		};
+		validateEmail();
+		validateImie();
+		validateNazwisko();
+		validateWyksztalcenie();
 
-		if (nextId > 0) {
-			let n: Nauczyciel = new Nauczyciel(
-				nextId,
-				target.imie.value,
-				target.nazwisko.value,
-				target.wyksztalcenie.value,
-				target.email.value
-			);
+		if (
+			imiePierwszaDuza &&
+			imieAZaz &&
+			imieMax20 &&
+			imieMin3 &&
+			nazwiskoPierwszaDuza &&
+			nazwiskoAZaz &&
+			nazwiskoMax20 &&
+			nazwiskoMin3 &&
+			wyksztalcenieAZaz &&
+			wyksztalcenieMax20 &&
+			wyksztalcenieMin3 &&
+			emailRegex &&
+			emailMin6 &&
+			emailMax40
+		) {
+			const target = e.target as typeof e.target & {
+				imie: { value: string };
+				nazwisko: { value: string };
+				wyksztalcenie: { value: string };
+				email: { value: string };
+			};
 
-			setEmailZajety(false);
-			emailTaken(n).then((res) => {
-				if (!res) {
-					props.appendNauczycieleList(n);
-					postNauczyciel(n).then((res) => {
-						getNextId("teachers").then((response) => setNextId(response));
+			if (nextId > 0) {
+				let n: Nauczyciel = new Nauczyciel(
+					nextId,
+					target.imie.value,
+					target.nazwisko.value,
+					target.wyksztalcenie.value,
+					target.email.value
+				);
+
+				setEmailZajety(false);
+				emailTaken(n).then((res) => {
+					if (!res) {
+						props.appendNauczycieleList(n);
+						postNauczyciel(n).then((res) => {
+							getNextId("teachers").then((response) => setNextId(response));
+							setButtonsDisabled(false);
+						});
+					} else {
+						setEmailZajety(true);
 						setButtonsDisabled(false);
-					});
-				} else {
-					setEmailZajety(true);
-					setButtonsDisabled(false);
-				}
-			});
+					}
+				});
+			}
+		} else {
+			setButtonsDisabled(false);
 		}
 	}
 
@@ -187,20 +211,17 @@ const DodajNauczyciela = (props: IProps) => {
 		} else {
 			el = document.getElementById("profil") as HTMLInputElement;
 		}
-
 		if (el.value) {
 			if (/[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$/.test(el.value)) {
 				setEmailRegex(true);
 			} else {
 				setEmailRegex(false);
 			}
-
 			if (el.value.length < 6) {
 				setEmailMin6(false);
 			} else {
 				setEmailMin6(true);
 			}
-
 			if (el.value.length > 40) {
 				setEmailMax40(false);
 			} else {

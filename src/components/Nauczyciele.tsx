@@ -16,9 +16,10 @@ function Nauczyciele(): React.ReactNode {
 		let el = event.target as Element;
 		let td = el.parentElement;
 		let nauczyciel: Nauczyciel = JSON.parse(td!.getAttribute("data-nauczyciel")!);
-		deleteNauczyciel(nauczyciel.id);
-		setListLoaded(false);
-		setNauczycieleList([]);
+		deleteNauczyciel(nauczyciel.id).then((res) => {
+			setListLoaded(false);
+			setNauczycieleList([]);
+		});
 	};
 
 	useEffect(() => {
@@ -37,6 +38,7 @@ function Nauczyciele(): React.ReactNode {
 
 	return (
 		<>
+			<h1>Nauczyciele</h1>
 			<ListaNauczycieli nauczycieleList={nauczycieleList} objectOnClick={objectOnClick} controlButtons={true} />
 			<DodajNauczyciela appendNauczycieleList={appendNauczycieleList} />
 		</>

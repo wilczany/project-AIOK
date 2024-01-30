@@ -25,14 +25,16 @@ const ListaNauczycieli = (props: IProps) => {
 							return (
 								<tr key={nauczyciel.Id.toString() + nauczyciel.FullName}>
 									{/* co do klucza odsyłam do pliku ListaKlas */}
-									<td data-nauczyciel={JSON.stringify(nauczyciel)} onClick={props.objectOnClick}>
-										{nauczyciel.FullName}
-										{props.controlButtons && (
-											<>
-												<button onClick={props.objectOnClick}>USUŃ</button>
-											</>
-										)}
-									</td>
+									{props.controlButtons ? (
+										<td data-nauczyciel={JSON.stringify(nauczyciel)}>
+											{nauczyciel.FullName}
+											<button onClick={props.objectOnClick}>USUŃ</button>
+										</td>
+									) : (
+										<td data-nauczyciel={JSON.stringify(nauczyciel)} onClick={props.objectOnClick}>
+											{nauczyciel.FullName}
+										</td>
+									)}
 								</tr>
 							);
 						})}

@@ -27,14 +27,17 @@ const ListaKlas = (props: IProps) => {
 									<tr key={klasa.Id.toString() + klasa.Rg}>
 										{/* po walidacji formularzy nawet samo Id będzie unikalnym kluczem tbh, ale teraz przynajmniej grupuje to co tak samo się ma wyświetlać mimo takich samych id */}
 										{/* dla zainteresowanych https://stackoverflow.com/questions/28329382/understanding-unique-keys-for-array-children-in-react-js */}
-										<td data-klasa={JSON.stringify(klasa)} onClick={props.objectOnClick}>
-											{klasa.Rg}
-											{props.controlButtons && (
-												<>
-													<button onClick={props.objectOnClick}>USUŃ</button>
-												</>
-											)}
-										</td>
+
+										{props.controlButtons ? (
+											<td data-klasa={JSON.stringify(klasa)}>
+												{klasa.Rg}
+												<button onClick={props.objectOnClick}>USUŃ</button>
+											</td>
+										) : (
+											<td data-klasa={JSON.stringify(klasa)} onClick={props.objectOnClick}>
+												{klasa.Rg}
+											</td>
+										)}
 									</tr>
 								);
 							})}

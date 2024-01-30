@@ -36,6 +36,24 @@ export function getKlasa(id: number): Promise<Klasa> {
 	}) as Promise<Klasa>;
 }
 
+export function getKlasyNauczyciela(id: number): Promise<Klasa[]> {
+	return axios.get(`http://localhost:3001/grades?_sort=rok,grupa&teacherId=${id}`).then((response) => {
+		let klasaList: Klasa[] = [];
+		response.data.forEach((params: any) => {
+			let nKlasa = new Klasa(
+				parseInt(params.id),
+				parseInt(params.rok),
+				params.grupa,
+				parseInt(params.liczba_uczniow),
+				parseInt(params.teacherId),
+				params.profil
+			);
+			klasaList.push(nKlasa);
+		});
+		return klasaList;
+	}) as Promise<Klasa[]>;
+}
+
 export function gradeTaken(klasa: Klasa): Promise<boolean> {
 	return axios.get(`http://localhost:3001/grades?grupa=${klasa.grupa}&rok=${klasa.rok}`).then((response) => {
 		if (response.data.length > 0) return true;
@@ -51,8 +69,13 @@ export function postKlasa(klasa: Klasa) {
 }
 
 export function deleteKlasa(id: number) {
-	return axios.delete(`http://localhost:3001/grades/${id}`).then((response) => {
-		return response;
+	return getLekcjeKlasy(id).then((res) => {
+		res.forEach((lekcja) => {
+			deleteLekcja(lekcja.id);
+		});
+		return axios.delete(`http://localhost:3001/grades/${id}`).then((response) => {
+			return response;
+		});
 	});
 }
 
@@ -107,8 +130,16 @@ export function postNauczyciel(nauczyciel: Nauczyciel) {
 }
 
 export function deleteNauczyciel(id: number) {
-	return axios.delete(`http://localhost:3001/teachers/${id}`).then((response) => {
-		return response;
+	return getLekcjeNauczyciela(id).then((res) => {
+		res.forEach((lekcja) => {
+			deleteLekcja(lekcja.id);
+		});
+		getKlasyNauczyciela(id).then((res) => {
+			res.forEach((klasa) => {
+				deleteKlasa(klasa.id);
+			});
+		});
+		return axios.delete(`http://localhost:3001/teachers/${id}`);
 	});
 }
 
@@ -153,8 +184,13 @@ export function postSala(sala: Sala) {
 }
 
 export function deleteSala(id: number) {
-	return axios.delete(`http://localhost:3001/classrooms/${id}`).then((response) => {
-		return response;
+	return getLekcjeSali(id).then((res) => {
+		res.forEach((lekcja) => {
+			deleteLekcja(lekcja.id);
+		});
+		return axios.delete(`http://localhost:3001/classrooms/${id}`).then((response) => {
+			return response;
+		});
 	});
 }
 
@@ -209,6 +245,126 @@ export function getLekcje(): Promise<Lekcja[]> {
 		});
 		return LekcjaList;
 	}) as Promise<Lekcja[]>;
+}
+
+export function getLekcjeKlasy(id: number): Promise<Lekcja[]> {
+	return axios
+		.get(`http://localhost:3001/lessons?_embed=classroom&_embed=teacher&_embed=grade&gradeId=${id}`)
+		.then((response) => {
+			let LekcjaList: Lekcja[] = [];
+			response.data.forEach((params: any) => {
+				let nLekcja = new Lekcja(
+					parseInt(params.id),
+					params.nazwa,
+					parseInt(params.nr_lekcji),
+					params.dzienTygodnia,
+					new Klasa(
+						parseInt(params.grade.id),
+						parseInt(params.grade.rok),
+						params.grade.grupa,
+						parseInt(params.grade.liczba_uczniow),
+						parseInt(params.grade.teacherId),
+						params.grade.profil
+					),
+					new Nauczyciel(
+						parseInt(params.teacher.id),
+						params.teacher.imie,
+						params.teacher.nazwisko,
+						params.teacher.wyksztalcenie,
+						params.teacher.email
+					),
+					new Sala(
+						parseInt(params.classroom.id),
+						parseInt(params.classroom.pietro),
+						parseInt(params.classroom.numer),
+						parseInt(params.classroom.pojemnosc)
+					),
+					params.typZajec
+				);
+				LekcjaList.push(nLekcja);
+			});
+			return LekcjaList;
+		}) as Promise<Lekcja[]>;
+}
+
+export function getLekcjeNauczyciela(id: number): Promise<Lekcja[]> {
+	return axios
+		.get(`http://localhost:3001/lessons?_embed=classroom&_embed=teacher&_embed=grade&teacherId=${id}`)
+		.then((response) => {
+			let LekcjaList: Lekcja[] = [];
+			response.data.forEach((params: any) => {
+				let nLekcja = new Lekcja(
+					parseInt(params.id),
+					params.nazwa,
+					parseInt(params.nr_lekcji),
+					params.dzienTygodnia,
+					new Klasa(
+						parseInt(params.grade.id),
+						parseInt(params.grade.rok),
+						params.grade.grupa,
+						parseInt(params.grade.liczba_uczniow),
+						parseInt(params.grade.teacherId),
+						params.grade.profil
+					),
+					new Nauczyciel(
+						parseInt(params.teacher.id),
+						params.teacher.imie,
+						params.teacher.nazwisko,
+						params.teacher.wyksztalcenie,
+						params.teacher.email
+					),
+					new Sala(
+						parseInt(params.classroom.id),
+						parseInt(params.classroom.pietro),
+						parseInt(params.classroom.numer),
+						parseInt(params.classroom.pojemnosc)
+					),
+					params.typZajec
+				);
+				LekcjaList.push(nLekcja);
+			});
+			return LekcjaList;
+		}) as Promise<Lekcja[]>;
+}
+
+export function getLekcjeSali(id: number): Promise<Lekcja[]> {
+	return axios
+		.get(`http://localhost:3001/lessons?_embed=classroom&_embed=teacher&_embed=grade&classroomId=${id}`)
+		.then((response) => {
+			let LekcjaList: Lekcja[] = [];
+			response.data.forEach((params: any) => {
+				let nLekcja = new Lekcja(
+					parseInt(params.id),
+					params.nazwa,
+					parseInt(params.nr_lekcji),
+					params.dzienTygodnia,
+					new Klasa(
+						parseInt(params.grade.id),
+						parseInt(params.grade.rok),
+						params.grade.grupa,
+						parseInt(params.grade.liczba_uczniow),
+						parseInt(params.grade.teacherId),
+						params.grade.profil
+					),
+					new Nauczyciel(
+						parseInt(params.teacher.id),
+						params.teacher.imie,
+						params.teacher.nazwisko,
+						params.teacher.wyksztalcenie,
+						params.teacher.email
+					),
+					new Sala(
+						parseInt(params.classroom.id),
+						parseInt(params.classroom.pietro),
+						parseInt(params.classroom.numer),
+						parseInt(params.classroom.pojemnosc)
+					),
+					params.typZajec
+				);
+				LekcjaList.push(nLekcja);
+			});
+			return LekcjaList;
+		}) as Promise<Lekcja[]>;
 }
 
 export function getLekcja(id: number): Promise<Lekcja> {

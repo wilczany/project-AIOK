@@ -25,14 +25,16 @@ const ListaSal = (props: IProps) => {
 							return (
 								<tr key={sala.Id.toString() + sala.Pn}>
 									{/* co do klucza odsyłam do pliku ListaKlas */}
-									<td data-sala={JSON.stringify(sala)} onClick={props.objectOnClick}>
-										{sala.Pn}
-										{props.controlButtons && (
-											<>
-												<button onClick={props.objectOnClick}>USUŃ</button>
-											</>
-										)}
-									</td>
+									{props.controlButtons ? (
+										<td data-sala={JSON.stringify(sala)}>
+											{sala.Pn}
+											<button onClick={props.objectOnClick}>USUŃ</button>
+										</td>
+									) : (
+										<td data-sala={JSON.stringify(sala)} onClick={props.objectOnClick}>
+											{sala.Pn}
+										</td>
+									)}
 								</tr>
 							);
 						})}

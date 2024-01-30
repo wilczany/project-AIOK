@@ -17,16 +17,6 @@ function Rozklady(): React.ReactNode {
 	const [selectedObject, setSelectedObject] = useState<Klasa | Nauczyciel | Sala | null>(null);
 	const [selectedLekcjeList, setSelectedLekcjeList] = useState<Lekcja[]>([]);
 
-	function appendKlasyList(klasa: Klasa) {
-		setKlasyList((klasyList) => [...klasyList, klasa]);
-	}
-	function appendNauczycieleList(nauczyciel: Nauczyciel) {
-		setNauczycieleList((nauczycieleList) => [...nauczycieleList, nauczyciel]);
-	}
-	function appendSaleList(sala: Sala) {
-		setSaleList((saleList) => [...saleList, sala]);
-	}
-
 	const objectOnClick = (event: SyntheticEvent) => {
 		let element = event.target as HTMLElement;
 		let data: string | null = element.getAttribute("data-klasa");
@@ -98,16 +88,10 @@ function Rozklady(): React.ReactNode {
 
 	return (
 		<>
+			<h2>Rozkłady</h2>
 			<ListaKlas klasyList={klasyList} objectOnClick={objectOnClick} />
 			<ListaNauczycieli nauczycieleList={nauczycieleList} objectOnClick={objectOnClick} />
 			<ListaSal saleList={saleList} objectOnClick={objectOnClick} />
-			{/* {selectedLekcjeList.map((lekcja) => {
-				return (
-					<p>
-						{lekcja.Nazwa} {lekcja.Klasa.Rg} {lekcja.Nauczyciel.ShortName} {lekcja.Sala.Pn}
-					</p>
-				);
-			})} */}
 			<Rozklad lekcjeList={selectedLekcjeList}></Rozklad>
 		</>
 	);

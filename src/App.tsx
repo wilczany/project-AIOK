@@ -1,12 +1,7 @@
 import "./stylesheets/app.css";
-import { Component, ReactNode, useEffect } from "react";
+import { Component } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { useState } from "react";
 
-//do debuga tylko
-import Piaskownica from "./components/debug/Piaskownica";
-import ListaNauczycieli from "./components/lista/ListaNauczycieli";
-import ListaSal from "./components/lista/ListaSal";
 import Rozklady from "./components/tabela/Rozklady";
 import Navbar from "./components/Navbar";
 import Klasy from "./components/Klasy";

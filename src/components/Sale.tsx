@@ -16,9 +16,10 @@ function Sale(): React.ReactNode {
 		let el = event.target as Element;
 		let td = el.parentElement;
 		let sala: Sala = JSON.parse(td!.getAttribute("data-sala")!);
-		deleteSala(sala.id);
-		setListLoaded(false);
-		setSaleList([]);
+		deleteSala(sala.id).then((res) => {
+			setListLoaded(false);
+			setSaleList([]);
+		});
 	};
 
 	useEffect(() => {
@@ -37,6 +38,7 @@ function Sale(): React.ReactNode {
 
 	return (
 		<>
+			<h1>Sale</h1>
 			<ListaSal saleList={saleList} objectOnClick={objectOnClick} controlButtons={true} />
 			<DodajSale appendSaleList={appendSaleList} />
 		</>

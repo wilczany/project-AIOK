@@ -17,9 +17,10 @@ function Klasy(): React.ReactNode {
 		let el = event.target as Element;
 		let td = el.parentElement;
 		let klasa: Klasa = JSON.parse(td!.getAttribute("data-klasa")!);
-		deleteKlasa(klasa.id);
-		setListLoaded(false);
-		setKlasyList([]);
+		deleteKlasa(klasa.id).then((res) => {
+			setListLoaded(false);
+			setKlasyList([]);
+		});
 	};
 
 	useEffect(() => {
@@ -39,6 +40,7 @@ function Klasy(): React.ReactNode {
 
 	return (
 		<>
+			<h1>Klasy</h1>
 			<ListaKlas klasyList={klasyList} objectOnClick={objectOnClick} controlButtons={true} />
 			<DodajKlase appendKlasyList={appendKlasyList} />
 		</>

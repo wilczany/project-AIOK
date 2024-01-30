@@ -1,166 +1,100 @@
 {
-	"teachers": [
-		{
-			"id": "1",
-			"imie": "Adrian",
-			"nazwisko": "Nowak",
-			"wyksztalcenie": "średnie",
-			"email": "a.nowak21@gmail.com"
-		},
-		{
-			"id": "2",
-			"imie": "Adam",
-			"nazwisko": "Szulc",
-			"wyksztalcenie": "średnie",
-			"email": "a.szulc37@gmail.com"
-		},
-		{
-			"id": "3",
-			"imie": "Andrzej",
-			"nazwisko": "Turkeminstan",
-			"wyksztalcenie": "średnie",
-			"email": "greenman@gmail.com"
-		}
-	],
-	"grades": [
-		{
-			"id": "1",
-			"grupa": "A",
-			"liczba_uczniow": "30",
-			"rok": "1",
-			"teacherId": "1",
-			"profil": "kosmetologia"
-		},
-		{
-			"id": "2",
-			"grupa": "C",
-			"liczba_uczniow": "30",
-			"rok": "1",
-			"teacherId": "2",
-			"profil": "architektura"
-		},
-		{
-			"id": "3",
-			"grupa": "D",
-			"liczba_uczniow": "30",
-			"rok": "1",
-			"teacherId": "3",
-			"profil": "mat-fiz"
-		}
-	],
-	"classrooms": [
-		{
-			"id": "1",
-			"pietro": "1",
-			"numer": "1",
-			"pojemnosc": "30"
-		},
-		{
-			"id": "2",
-			"pietro": "1",
-			"numer": "14",
-			"pojemnosc": "30"
-		},
-		{
-			"id": "3",
-			"pietro": "2",
-			"numer": "1",
-			"pojemnosc": "30"
-		}
-	],
-	"lessons": [
-		{
-			"id": "1",
-			"nazwa": "Matematyka",
-			"nr_lekcji": "1",
-			"dzienTygodnia": "pon",
-			"gradeId": "1",
-			"teacherId": "1",
-			"classroomId": "1",
-			"typZajec": "zaj"
-		},
-		{
-			"id": "2",
-			"nazwa": "Fizyka",
-			"nr_lekcji": "2",
-			"dzienTygodnia": "pon",
-			"gradeId": "1",
-			"teacherId": "1",
-			"classroomId": "1",
-			"typZajec": "zaj"
-		},
-		{
-			"id": "3",
-			"nazwa": "Nanomaszyneria",
-			"nr_lekcji": "3",
-			"dzienTygodnia": "pon",
-			"gradeId": "1",
-			"teacherId": "3",
-			"classroomId": "1",
-			"typZajec": "zaj"
-		},
-		{
-			"id": "4",
-			"nazwa": "Język polski",
-			"nr_lekcji": "1",
-			"dzienTygodnia": "pon",
-			"gradeId": "2",
-			"teacherId": "2",
-			"classroomId": "2",
-			"typZajec": "zaj"
-		},
-		{
-			"id": "5",
-			"nazwa": "Język niemiecki",
-			"nr_lekcji": "4",
-			"dzienTygodnia": "pon",
-			"gradeId": "2",
-			"teacherId": "1",
-			"classroomId": "1",
-			"typZajec": "zaj"
-		},
-		{
-			"id": "6",
-			"nazwa": "Historia",
-			"nr_lekcji": "5",
-			"dzienTygodnia": "pon",
-			"gradeId": "2",
-			"teacherId": "1",
-			"classroomId": "1",
-			"typZajec": "zaj"
-		},
-		{
-			"id": "7",
-			"nazwa": "Wiedza o społeczeństwie",
-			"nr_lekcji": "3",
-			"dzienTygodnia": "pon",
-			"gradeId": "3",
-			"teacherId": "3",
-			"classroomId": "2",
-			"typZajec": "zaj"
-		},
-		{
-			"id": "8",
-			"nazwa": "Wychowanie fizyczne",
-			"nr_lekcji": "2",
-			"dzienTygodnia": "pon",
-			"gradeId": "3",
-			"teacherId": "2",
-			"classroomId": "2",
-			"typZajec": "zaj"
-		},
-		{
-			"id": "9",
-			"nazwa": "Matematyka",
-			"nr_lekcji": "6",
-			"dzienTygodnia": "pon",
-			"gradeId": "3",
-			"teacherId": "2",
-			"classroomId": "1",
-			"typZajec": "zaj"
-		}
-	],
-	"profile": {
-		"name": "planowanie"
-	}
+  "teachers": [
+    {
+      "id": "1",
+      "imie": "Adrian",
+      "nazwisko": "Nowak",
+      "wyksztalcenie": "średnie",
+      "email": "a.nowak21@gmail.com"
+    },
+    {
+      "id": "2",
+      "imie": "Adam",
+      "nazwisko": "Szulc",
+      "wyksztalcenie": "średnie",
+      "email": "a.szulc37@gmail.com"
+    },
+    {
+      "id": "3",
+      "imie": "Andrzej",
+      "nazwisko": "Turkeminstan",
+      "wyksztalcenie": "średnie",
+      "email": "greenman@gmail.com"
+    }
+  ],
+  "grades": [
+    {
+      "id": "1",
+      "grupa": "A",
+      "liczba_uczniow": "30",
+      "rok": "1",
+      "teacherId": "1",
+      "profil": "kosmetologia"
+    },
+    {
+      "id": "2",
+      "grupa": "C",
+      "liczba_uczniow": "30",
+      "rok": "1",
+      "teacherId": "2",
+      "profil": "architektura"
+    },
+    {
+      "id": "3",
+      "grupa": "D",
+      "liczba_uczniow": "30",
+      "rok": "1",
+      "teacherId": "3",
+      "profil": "mat-fiz"
+    }
+  ],
+  "classrooms": [
+    {
+      "id": "2",
+      "pietro": "1",
+      "numer": "14",
+      "pojemnosc": "30"
+    },
+    {
+      "id": "3",
+      "pietro": "2",
+      "numer": "1",
+      "pojemnosc": "30"
+    }
+  ],
+  "lessons": [
+    {
+      "id": "4",
+      "nazwa": "Język polski",
+      "nr_lekcji": "1",
+      "dzienTygodnia": "pon",
+      "gradeId": "2",
+      "teacherId": "2",
+      "classroomId": "2",
+      "typZajec": "zaj"
+    },
+    {
+      "id": "7",
+      "nazwa": "Wiedza o społeczeństwie",
+      "nr_lekcji": "3",
+      "dzienTygodnia": "pon",
+      "gradeId": "3",
+      "teacherId": "3",
+      "classroomId": "2",
+      "typZajec": "zaj"
+    },
+    {
+      "id": "8",
+      "nazwa": "Wychowanie fizyczne",
+      "nr_lekcji": "2",
+      "dzienTygodnia": "pon",
+      "gradeId": "3",
+      "teacherId": "2",
+      "classroomId": "2",
+      "typZajec": "zaj"
+    }
+  ],
+  "profile": {
+    "name": "planowanie"
+  }
 }

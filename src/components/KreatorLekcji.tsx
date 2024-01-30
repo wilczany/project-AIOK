@@ -25,7 +25,7 @@ function KreatorLekcji(): React.ReactNode {
 
 	//ładowanie danych
 	useEffect(() => {
-		document.title = "Kreator zajęć";
+		document.title = "Kreator lekcji";
 		let klasyPromise: Promise<Klasa[]> = getKlasy();
 		klasyPromise
 			.then((klasy) =>
@@ -101,6 +101,7 @@ function KreatorLekcji(): React.ReactNode {
 
 	return (
 		<>
+			<h1>Kreator lekcji</h1>
 			<DodajLekcje
 				klasyList={klasyList}
 				nauczycieleList={nauczycieleList}

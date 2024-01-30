@@ -281,9 +281,7 @@ const DodajLekcje = (props: IProps) => {
 		validateKlasa();
 		let element = event.target as HTMLSelectElement;
 		let kl: Klasa = JSON.parse(element.value);
-		console.log(kl);
 		props.setSelectedKlasa(kl);
-		console.log(kl);
 	}
 
 	function onNauczycielSelect(event: SyntheticEvent<HTMLSelectElement, Event>): void {
